@@ -1,27 +1,45 @@
-import  express from 'express'
-import handlebars from 'express-handlebars'
-import __dirname from './utils.js'
-import productRouter from './routes/products.router.js'
-import cartRouter from './routes/carts.router.js'
-import viewsRouter from './routes/views.router.js'
+import express from "express";
+import fs from 'fs'
+import { Server } from "socket.io";
+import handlebars from "express-handlebars";
+import __dirname from "./utils.js";
+import productRouter from "./routes/products.router.js";
+import cartRouter from "./routes/carts.router.js";
+import viewsRouter from "./routes/views.router.js";
+import ProductManager from "./productManager.js";
 
-const PORT = 8080
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded({ extended: true}))
+const productManager = new ProductManager("./src/productos.json");
 
-app.engine('handlebars', handlebars.engine())
+const PORT = 8080;
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.set('views', __dirname+'/views')
+app.engine("handlebars", handlebars.engine());
 
-app.set('view engine', 'handlebars')
+app.set("views", __dirname + "/views");
 
-app.use(express.static(__dirname+'/public'))
+app.set("view engine", "handlebars");
 
-app.use('/api/products', productRouter)
-app.use('/api/carts', cartRouter)
-app.use('/', viewsRouter)
+app.use(express.static("public"));
 
-app.listen(PORT, () => {
-    console.log("Servidor arriba en el puerto 8080")
-})
+app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
+app.use("/", viewsRouter);
+
+const httpServer = app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
+
+const io = new Server(httpServer);
+
+const products = await productManager.getProducts()
+
+io.on("connect",  (socket) => {
+    console.log("Nuevo cliente conectado");
+
+  io.emit("ProdLogs", products);
+  socket.on("product", async(prod) => {
+    await productManager.addProduct(prod)
+});
+});
