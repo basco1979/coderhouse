@@ -1,0 +1,16 @@
+<div>
+    <h1>Listado de Productos</h1>
+    <ul>
+        {{#each products.docs}}
+        <li>{{this.title}}</li>
+        {{/each}}
+    </ul>
+    <br />
+    {{#if products.hasPrevPage}}
+    <button><a href="{{products.prevLink}}"> Pagina Previa</a></button>
+    {{/if}}
+        <br />
+    {{#if products.hasNextPage}}
+    <button><a href="{{products.nextLink}}"> Pagina Siguiente</a></button>
+    {{/if}}
+</div>

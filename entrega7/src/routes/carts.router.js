@@ -25,21 +25,18 @@ cartRouter.get('/:cid', async (req, res) => {
       res.send({message : "Carrito Vacío"})
     }
     else{
-      res.send(cart.products)}
+      res.send({cart})}
     }
   else res.status(404).send({ error: 'Carrito no encontrado' })
 })
 
 cartRouter.post('/:cid/product/:pid', async(req, res) => {
   const { cid } = req.params
-  console.log(cid)
   const { pid } = req.params
-  const product = {
-    id : pid,
-    quantity: 1
-  }
+ 
   try{
-        const result = await cartManager.addProductToCart(cid, product)
+        const result = await cartManager.addProductToCart(cid, pid)
+  
         res.send(result);
     }
     catch(err){

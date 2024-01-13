@@ -30,7 +30,7 @@ productRouter.get('/', async (req, res) => {
       })
     }
     if(sort === undefined && query !== undefined) {
-      //http://localhost:8080/api/products?query=title:Mongo
+      //http://localhost:8080/api/products?query=category:Cat
       let aux = query.split(':')
       aux[0] = aux[0].replace('{', '')
       aux[1] = aux[1].replace('}', '')
@@ -80,6 +80,7 @@ productRouter.get('/', async (req, res) => {
         nextLink: listado.hasNextPage ? `http://localhost:8080/products?page=${listado.nextPage}` : null
       })
     }
+http://localhost:8080/api/products?query=category:Cat&sort=code:desc&limit=2&page=2
       if ((sort !== undefined) && (query !== undefined)) {
       var aux = sort.split(':')
       aux[0] = aux[0].replace('{', '')

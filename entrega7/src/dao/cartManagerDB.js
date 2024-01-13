@@ -19,12 +19,12 @@ export default class CartManagerDB {
       console.log('No se encontro el carrito de compras')
     } else {
       //si no tiene el producto lo agrega al carrito
-      if (!cart.products.some((p) => Number(p.id) === Number(product.id))) {
+      if (!cart.products.some((p) => p.product.toString() === product)) {
         cart.products.push({ ...product })
       } else {
         // si ya existe el producto aumenta la cantidad del mismo
         for (let i = 0; i < cart.products.length; i++) {
-          if (Number(cart.products[i].id) === Number(product.id)) {
+          if (cart.products[i].product.toString() === product) {
             cart.products[i].quantity += 1
           }
         }
@@ -39,7 +39,7 @@ export default class CartManagerDB {
   }
 
   async getCartById(id) {
-    const cart = await cartModel.findById({_id : id})
+    const cart = await cartModel.findById({_id : id}).populate('products').populate('products.product')
     if (cart) {
       return cart
     } else {
