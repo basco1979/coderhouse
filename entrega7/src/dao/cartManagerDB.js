@@ -20,7 +20,7 @@ export default class CartManagerDB {
     } else {
       //si no tiene el producto lo agrega al carrito
       if (!cart.products.some((p) => p.product.toString() === product)) {
-        cart.products.push({ ...product })
+        cart.products.push({ product : product, quantity: 1 })
       } else {
         // si ya existe el producto aumenta la cantidad del mismo
         for (let i = 0; i < cart.products.length; i++) {

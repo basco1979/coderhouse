@@ -21,9 +21,7 @@ const hbs = handlebars.create({
 })
 
 app.engine("handlebars", hbs.engine);
-
 app.set("views", "src/views");
-
 app.set("view engine", "handlebars");
 
 
