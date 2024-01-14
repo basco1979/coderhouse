@@ -35,7 +35,7 @@ cartRouter.post('/:cid/product/:pid', async(req, res) => {
   const { pid } = req.params
   try{
         const result = await cartManager.addProductToCart(cid, pid)
-        
+
         res.send(result);
     }
     catch(err){
@@ -59,7 +59,15 @@ cartRouter.delete('/:cid/product/:pid', async(req, res) => {
 })
 
 cartRouter.put('/:cid', async(req, res) => {
-  //no entiendo que hace esto
+  //no entiendo bien que hace esto
+  const { cid} = req.params
+  const { newCart } = req.body
+ try {
+  await cartManager.updateCart(cid, newCart)
+    res.json({ message : "Carrito actualizado"})
+ } catch (error) {
+        console.log("Error al actualizar el producto");  
+ } 
 })
 
 cartRouter.put('/:cid/product/:pid', async(req, res) => {
