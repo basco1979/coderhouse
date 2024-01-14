@@ -5,14 +5,12 @@
         <td> Title </td>
         <td> Quantity </td>
         <td> Price </td>
-        <td> Subtotal</td>
     </tr>
 {{#each cart.products}}
  <tr class="product">
         <td class="title">{{this.product.title}} </td>
         <td>  {{this.quantity}}   </td>
         <td>  $ {{this.product.price}}   </td>
-        <td> {{subtotal}}   </td>
         </tr>
 {{/each}}
  </table>
