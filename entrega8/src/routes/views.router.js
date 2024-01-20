@@ -1,21 +1,37 @@
 import { Router } from 'express'
 import { productModel } from '../dao/models/product.model.js'
 import CartManagerDB from '../dao/cartManagerDB.js'
+import { checkAuth, checkExistingUser } from "../middlewares/auth.js";
+
+
 const cartManager = new CartManagerDB()
 const viewsRouter = Router()
 
-viewsRouter.get('/', async (req, res) => {
+viewsRouter.get('/', checkAuth, (req, res) => {
+    const {user} = req.session;
+    res.render('index', user);
+});
+
+viewsRouter.get('/login', checkExistingUser, (req, res) => {
+    res.render('login');
+});
+
+viewsRouter.get('/register', checkExistingUser, (req, res) => {
+    res.render('register');
+})
+
+viewsRouter.get('/chat', async (req, res) => {
   res.render('chat', {title: 'Chat', style: 'chat.css'})
 })
 
-
 viewsRouter.get('/products', async (req, res) => {
+  const { first_name, last_name, rol } = req.session.user;
   let { page } = req.query
   if (!page || isNaN(Number(page))) page = 1
   const products = await productModel.paginate({}, {limit:10,page:page} )
   products.prevLink = `/products/?page=${Number(page)-1 }`
   products.nextLink = `/products/?page=${Number(page)+1 }`
-  res.render('products', {products, title: 'Products', style : 'products.css'})
+  res.render('products', {first_name, last_name, rol,  products,  title: 'Products', style : 'products.css'})
 })
 
 viewsRouter.get('/:cid/add/:pid', async(req, res) => {
