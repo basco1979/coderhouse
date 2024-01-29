@@ -1,5 +1,6 @@
 import MongoStore from 'connect-mongo';
 import express from "express";
+import cors from 'cors'
 import session from 'express-session';
 import { Server } from "socket.io";
 import handlebars from "express-handlebars";
@@ -15,7 +16,7 @@ import initializePassport from './config/passport.config.js';
 
 const PORT = 8080;
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
