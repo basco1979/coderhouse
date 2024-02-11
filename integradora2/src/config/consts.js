@@ -1,0 +1,1 @@
+export const secret = 'C0derh0use'
