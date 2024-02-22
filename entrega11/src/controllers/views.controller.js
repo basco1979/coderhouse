@@ -1,4 +1,5 @@
 import CartManagerDB from '../dao/cartManagerDB.js'
+import { productModel } from '../dao/models/product.model.js'
 
 const cartManager = new CartManagerDB()
 
