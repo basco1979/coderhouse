@@ -1,10 +1,10 @@
 import { Router } from 'express'
 
-import { deleteCart, deleteProductInCart, getCartById, postCart, postProductInCart, putCart, putProductInCart } from '../controllers/carts.controller.js'
+import { deleteCart, deleteProductInCart, getCartById, saveCart, postProductInCart, putCart, putProductInCart } from '../controllers/carts.controller.js'
 
 const cartRouter = Router()
 
-cartRouter.post('/', postCart)
+cartRouter.post('/', saveCart)
 
 cartRouter.get('/:cid', getCartById)
 

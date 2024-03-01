@@ -3,12 +3,22 @@ import { cartModel } from "../models/cart.model.js";
 export default class Carts {
     constructor(){}
 
-    get = async () => {
+    getCarts = async () => {
         const carts = await cartModel.find()
         return carts;
     }
 
-    post = async (cart) => {
+    getCartById = async (id) => {
+        try {
+            const result = await cartModel.findOne({_id: id});
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
+    saveCart = async (cart) => {
         try {
             const result = await cartModel.create(cart);
             return true;
@@ -18,7 +28,7 @@ export default class Carts {
         }
     }
 
-    put = async (id, cart) => {
+    updateCart = async (id, cart) => {
         try {
             const result = await cartModel.findOneAndUpdate({_id: id}, cart);
             return true;
@@ -27,7 +37,7 @@ export default class Carts {
         }
     }
 
-    delete = async (id) => {
+    deleteCart = async (id) => {
         try {
             const result = await cartModel.deleteOne({_id: id});
             return true;
