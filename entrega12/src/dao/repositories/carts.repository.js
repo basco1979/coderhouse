@@ -40,12 +40,36 @@ export default class CartRepository {
 
   deleteProductInCart = async (id, productId) => {
     const cart = await this.dao.getCartById(id)
+    console.log(cart)
     let index = cart.products.find((item) => item.id === productId)
-    
     if (index) {
-        console.log("first")
       cart.products.pull(index)
     }
     await this.dao.updateCart(id, cart)
   }
+
+  updateCart = async (id, cart) => {
+    const cartUpdated = await this.dao.updateCart(id, cart)
+    return cartUpdated  
+  }
+
+
+  putProductInCart = async (idCart, idProduct, quantity) => {
+    const cart = await this.dao.getCartById(idCart)
+    let index
+    for (let i = 0; i < cart.products.length; i++) {
+      if (cart.products[i].id === idProduct) {
+        index = i
+      }
+    }
+    cart.products[index].quantity = quantity
+    await this.dao.updateCart(idCart, cart)
+  }
+
+  deleteCart  = async (id) => {
+   const cart = await this.dao.getCartById(id)
+   cart.products = []
+   await this.dao.updateCart(id, cart)
+  }
+
 }

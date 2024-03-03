@@ -6,13 +6,12 @@ export default class ProductRepository {
   }
 
   getProducts = () => {
-    const result = this.dao.get()
+    const result = this.dao.getProducts()
     return result
   }
 
   getProductById = async (id) => {
-    const products = await this.getProducts()
-    const product = products.find((prod) => prod.id === id)
+    const product = await this.dao.getProductById(id) 
     if (product) {
       return product
     } else {
@@ -22,7 +21,16 @@ export default class ProductRepository {
 
   createProduct = async (product) => {
     const newProduct = new ProductDTO(product);
-    const result = this.dao.post(newProduct)
+    const result = this.dao.saveProduct(newProduct)
     return result
   }
-}
+
+  updateProduct = async (id, product) => {
+    const productUpdated = await this.dao.updateProduct(id, product)
+    return productUpdated  
+  }
+  deleteProduct  = async (id) => {
+   const product = await this.dao.deleteProduct(id)
+   return product
+  }
+  }

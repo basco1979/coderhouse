@@ -3,12 +3,22 @@ import { productModel } from "../models/product.model.js";
 export default class Products {
     constructor(){}
 
-    get = async () => {
+    getProducts = async () => {
         const products = await productModel.find()
         return products;
     }
 
-    post = async (product) => {
+    getProductById = async (id) => {
+        try {
+            const result = await productModel.findOne({_id: id});
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
+    saveProduct = async (product) => {
         try {
             const result = await productModel.create(product);
             return true;
@@ -18,7 +28,7 @@ export default class Products {
         }
     }
 
-    put = async (id, product) => {
+    updateProduct = async (id, product) => {
         try {
             const result = await productModel.findOneAndUpdate({_id: id}, product);
             return true;
@@ -27,7 +37,7 @@ export default class Products {
         }
     }
 
-    delete = async (id) => {
+    deleteProduct = async (id) => {
         try {
             const result = await productModel.deleteOne({_id: id});
             return true;

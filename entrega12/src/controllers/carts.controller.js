@@ -34,6 +34,7 @@ export const postProductInCart = async (req, res) => {
   }
 }
 
+
 export const deleteProductInCart = async (req, res) => {
   const { cid, pid } = req.params
    try {
@@ -49,7 +50,7 @@ export const putCart = async (req, res) => {
   const { cid } = req.params
   const newCart = req.body
   try {
-    await cartManager.updateCart(cid, newCart)
+    await cartsService.updateCart(cid, newCart)
     res.json({ message: 'Carrito actualizado' })
   } catch (error) {
     console.log('Error al actualizar el producto')
@@ -58,17 +59,10 @@ export const putCart = async (req, res) => {
 
 export const putProductInCart = async (req, res) => {
   const { cid, pid } = req.params
-  const cart = await cartManager.getCartById(cid)
-  let index
-  for (let i = 0; i < cart.products.length; i++) {
-    if (cart.products[i].id == pid) {
-      index = i
-    }
-  }
-  cart.products[index].quantity = req.body.quantity
+  const quantity = req.body.quantity
   try {
-    await cartManager.updateCart(cid, cart)
-    res.json(cart.products[index])
+    await cartsService.putProductInCart(cid, pid, quantity)
+    res.json({message: "Cart Updated"})
   } catch (error) {
     console.log('Error al actualizar el producto')
   }
@@ -76,11 +70,9 @@ export const putProductInCart = async (req, res) => {
 
 export const deleteCart = async (req, res) => {
   const { cid } = req.params
-  const cart = await cartManager.getCartById(cid)
-  cart.products = []
   try {
-    await cartManager.updateCart(cid, cart)
-    res.json(cart.products)
+    const cart = await cartsService.deleteCart(cid)
+    res.json(cart)
   } catch (error) {
     console.log('Error al vaciar el carrito')
   }

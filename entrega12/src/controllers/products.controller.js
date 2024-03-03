@@ -134,7 +134,7 @@ export const getProductById = async (req, res) => {
   }
 }
 
-export const postProduct = async (req, res) => {
+export const createProduct = async (req, res) => {
   const product = req.body
   try {
     const result = await productsService.createProduct(product)
@@ -145,11 +145,11 @@ export const postProduct = async (req, res) => {
   }
 }
 
-export const putProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
   const productId = req.params.pid
   const product = req.body
   try {
-    const result = await productManager.updateProduct(productId, product)
+    const result = await productsService.updateProduct(productId, product)
     res.send(result)
   } catch (err) {
     console.log('Error al actualizar el producto')
@@ -159,7 +159,7 @@ export const putProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const product = req.params.pid
   try {
-    const result = await productManager.deleteProduct(product)
+    const result = await productsService.deleteProduct(product)
     res.send(result)
   } catch (err) {
     console.log('error', err)
