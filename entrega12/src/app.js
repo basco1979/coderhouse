@@ -5,15 +5,16 @@ import session from 'express-session';
 import { Server } from "socket.io";
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
-import productRouter from "./routes/products.router.js";
 import cartRouter from "./routes/carts.router.js";
-import viewsRouter from "./routes/views.router.js";
 import mongoose from "mongoose";
 import { messageModel } from "./dao/models/message.model.js";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 import config from './config/config.js';
 import SessionRouter from './routes/session.routes.js';
+import ProductsRouter from './routes/products.router.js';
+import ViewsRouter from './routes/views.router.js';
+
 
 const PORT = config.port;
 const app = express();
@@ -44,10 +45,11 @@ app.engine("handlebars", hbs.engine);
 app.set("views", "src/views");
 app.set("view engine", "handlebars");
 
-
-app.use("/api/products", productRouter);
+const productRouter = new ProductsRouter()
+app.use("/api/products", productRouter.getRouter());
 app.use("/api/carts", cartRouter);
-app.use("/", viewsRouter);
+const viewsRouter = new ViewsRouter()
+app.use("/", viewsRouter.getRouter());
 const sessionRouter = new SessionRouter();
 app.use('/api/session', sessionRouter.getRouter());
 

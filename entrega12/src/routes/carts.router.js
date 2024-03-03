@@ -2,20 +2,20 @@ import { Router } from 'express'
 
 import { deleteCart, deleteProductInCart, getCartById, saveCart, postProductInCart, putCart, putProductInCart } from '../controllers/carts.controller.js'
 
-const cartRouter = Router()
+export default class CartsRouter extends Router {
+  init() {
 
-cartRouter.post('/', saveCart)
+this.post('/', ['USER'], saveCart)
 
-cartRouter.get('/:cid', getCartById)
+this.get('/:cid',['USER'], getCartById)
 
-cartRouter.post('/:cid/product/:pid', postProductInCart)
+this.post('/:cid/product/:pid',['USER'], postProductInCart)
 
-cartRouter.delete('/:cid/product/:pid', deleteProductInCart)
+this.delete('/:cid/product/:pid',['USER'], deleteProductInCart)
 
-cartRouter.put('/:cid', putCart)
+this.put('/:cid',['USER'], putCart)
 
-cartRouter.put('/:cid/product/:pid', putProductInCart)
+this.put('/:cid/product/:pid',['USER'], putProductInCart)
 
-cartRouter.delete('/:cid', deleteCart)
-
-export default cartRouter
+this.delete('/:cid',['USER'], deleteCart)
+  }}

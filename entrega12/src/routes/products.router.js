@@ -1,16 +1,22 @@
-import { Router } from 'express'
-import { deleteProduct, getProductById, getProducts, createProduct, updateProduct } from '../controllers/products.controller.js'
+import { Router } from './router.js'
+import {
+  deleteProduct,
+  getProductById,
+  getProducts,
+  createProduct,
+  updateProduct,
+} from '../controllers/products.controller.js'
 
-const productRouter = Router()
+export default class ProductsRouter extends Router {
+  init() {
+    this.get('/',['PUBLIC'], getProducts)
 
-productRouter.get('/', getProducts)
+    this.get('/:pid',['PUBLIC'], getProductById)
 
-productRouter.get('/:pid', getProductById)
+    this.post('/', ['ADMIN'], createProduct)
 
-productRouter.post('/', createProduct)
+    this.put('/:pid', ['ADMIN'], updateProduct)
 
-productRouter.put('/:pid', updateProduct)
-
-productRouter.delete('/:pid', deleteProduct)
-
-export default productRouter
+    this.delete('/:pid', ['ADMIN'], deleteProduct)
+  }
+}

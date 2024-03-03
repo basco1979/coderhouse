@@ -3,12 +3,17 @@ import { userModel } from "../models/user.model.js";
 export default class Users {
     constructor(){}
 
-    get = async () => {
+    getUsers = async () => {
         const users = await userModel.find()
         return users;
     }
 
-    post = async (user) => {
+    getUserByEmail = async (email) => {
+        const user = await userModel.findOne({ email: email })
+        return user;
+    }
+
+    saveUser = async (user) => {
         try {
             const result = await userModel.create(user);
             return true;
@@ -18,7 +23,7 @@ export default class Users {
         }
     }
 
-    put = async (id, user) => {
+    updateUser = async (id, user) => {
         try {
             const result = await userModel.findOneAndUpdate({_id: id}, user);
             return true;

@@ -10,10 +10,20 @@ export default class UserRepository {
         return result;
     }
 
+    getUserByEmail = (email) => {
+        const user = this.dao.getUserByEmail(email)
+        return user;
+    }
+
     createUser =  (user) => {
         const newUser = new UserDTO(user);
-        const result = this.dao.post(newUser);
+        const result = this.dao.saveUser(newUser);
         return result;
+    }
+
+    updateUser = async (id, user) =>{
+        const result = await this.dao.updateUser(id, user);
+        return result
     }
 
 }

@@ -1,7 +1,5 @@
 import { Router } from './router.js'
 import passport from 'passport'
-import { userModel } from "../dao/models/user.model.js";
-import { createHash } from "../utils/bcrypt.js";
 import { adminProducts, currentUser, login, register, logout, restorePassword } from '../controllers/session.controller.js';
 
 

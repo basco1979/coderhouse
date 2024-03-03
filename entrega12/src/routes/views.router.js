@@ -1,30 +1,29 @@
-import { Router } from 'express'
-import CartManagerDB from '../dao/cartManagerDB.js'
+import { Router } from './router.js'
 import { checkAuth, checkExistingUser } from "../middlewares/auth.js";
 import { addProductToCart, getCartDetailPage, getChatPage, getFailLoginPage, getFailRegisterPage, getIndexPage, getLoginPage, getProductsPage, getRegisterPage, restorePassword } from '../controllers/views.controller.js';
 
 
-const cartManager = new CartManagerDB()
-const viewsRouter = Router()
+export default class ViewsRouter extends Router{
+  init() {
+this.get('/', ['PUBLIC'],checkAuth, getIndexPage);
 
-viewsRouter.get('/', checkAuth, getIndexPage);
+this.get('/login', ['PUBLIC'], checkExistingUser, getLoginPage);
 
-viewsRouter.get('/login', checkExistingUser, getLoginPage);
+this.get('/register', ['PUBLIC'], checkExistingUser, getRegisterPage)
 
-viewsRouter.get('/register', checkExistingUser, getRegisterPage)
+this.get('/chat', ['USER'], getChatPage)
 
-viewsRouter.get('/chat', getChatPage)
+this.get('/products',  ['USER'],getProductsPage)
 
-viewsRouter.get('/products', getProductsPage)
+this.get('/:cid/add/:pid', ['USER'],addProductToCart)
 
-viewsRouter.get('/:cid/add/:pid', addProductToCart)
+this.get('/cart/:cid', ['USER'],getCartDetailPage)
 
-viewsRouter.get('/cart/:cid', getCartDetailPage)
+this.get('/restore-password',  ['USER'], checkExistingUser,  restorePassword)
 
-viewsRouter.get('/restore-password', checkExistingUser,  restorePassword)
+this.get('/failregister', ['PUBLIC'],getFailRegisterPage)
 
-viewsRouter.get('/failregister', getFailRegisterPage)
+this.get('/faillogin',['PUBLIC'],getFailLoginPage)
+}
+}
 
-viewsRouter.get('/faillogin',getFailLoginPage)
-
-export default viewsRouter
