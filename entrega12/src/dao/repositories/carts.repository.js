@@ -1,5 +1,7 @@
 import CartDTO from '../../dtos/cart.dto.js'
+import TicketDTO from '../../dtos/ticket.dto.js'
 import { productModel } from '../models/product.model.js'
+import { uuid } from 'uuidv4';
 
 export default class CartRepository {
   constructor(dao) {
@@ -51,9 +53,8 @@ export default class CartRepository {
 
   updateCart = async (id, cart) => {
     const cartUpdated = await this.dao.updateCart(id, cart)
-    return cartUpdated  
+    return cartUpdated
   }
-
 
   putProductInCart = async (idCart, idProduct, quantity) => {
     const cart = await this.dao.getCartById(idCart)
@@ -67,27 +68,42 @@ export default class CartRepository {
     await this.dao.updateCart(idCart, cart)
   }
 
-  deleteCart  = async (id) => {
-   const cart = await this.dao.getCartById(id)
-   cart.products = []
-   await this.dao.updateCart(id, cart)
+  deleteCart = async (id) => {
+    const cart = await this.dao.getCartById(id)
+    cart.products = []
+    await this.dao.updateCart(id, cart)
   }
 
-  purchaseCart = async(id) => {
-   const cart = await this.dao.getCartById(id)
-    let newCart
+  purchaseCart = async (id) => {
+    const cart = await this.dao.getCartById(id)
+    let newCart = []
+    let ticket = {}
     for (let i = 0; i < cart.products.length; i++) {
-    const product = await productModel.findOne({_id: cart.products[i].product})
-    if(cart.products[i].quantity > product.stock){
-      console.log("Product exceeds stock")
+      const product = await productModel.findOne({
+        _id: cart.products[i].product,
+      })
+      if (cart.products[i].quantity > product.stock) {
+        console.log('Product exceeds stock')
+        newCart = cart.products[i]
+      }
+      if (cart.products[i].quantity <= product.stock) {
+        product.stock -= cart.products[i].quantity
+        await productModel.findOneAndUpdate({ _id: product.id }, product)
+        let amount = (cart.products[i].quantity*product.price)
+        console.log(amount)
+        ticket.amount = 0
+        ticket.amount += amount
+        ticket.code = uuid()
+        ticket.purchase_datetime = Date.now()
+      }
     }
-    if(cart.products[i].quantity <= product.stock){
-      product.stock -= cart.products[i].quantity
-      await productModel.findOneAndUpdate({_id: product.id}, product);
-      newCart = cart.products.filter((prod) => cart.products[i].product !== prod.product)
-      await this.dao.updateCart(id,{products : newCart})
-    }
-    }
+    console.log(ticket)
+    await this.dao.updateCart(id, { products: newCart })
   }
 
+  createTicket = (ticket) => {
+    const newTicket = new TicketDTO(ticket)
+    const result = this.dao.createTicket(newTicket) 
+    return result
+  }
 }

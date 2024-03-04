@@ -82,7 +82,8 @@ export const purchaseCart = async (req, res) => {
   let { cid } = req.params
   try {
     const cart = await cartsService.purchaseCart(cid)
-    res.status(cart)
+    const purchaseTicket = await cartsService.createTicket(ticket)
+    res.status(purchaseTicket)
   } catch (error){
     console.log('Error to make the purchase')
   }

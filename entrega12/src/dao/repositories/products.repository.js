@@ -15,7 +15,7 @@ export default class ProductRepository {
     if (product) {
       return product
     } else {
-      console.log('Id no existe')
+      console.log('Id does not exists')
     }
   }
 

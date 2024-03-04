@@ -1,5 +1,6 @@
 import { cartModel } from "../models/cart.model.js";
-import { productModel } from "../models/product.model.js";
+import { ticketModel } from "../models/ticket.model.js";
+
 
 export default class Carts {
     constructor(){}
@@ -46,5 +47,15 @@ export default class Carts {
             return false;
         }
     }
+
+    createTicket = async(ticket) => {
+     try {
+            const result = await ticketModel.create(ticket);
+            return result;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+}
 
 }

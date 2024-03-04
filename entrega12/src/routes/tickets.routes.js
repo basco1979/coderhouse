@@ -5,6 +5,6 @@ export default class TicketsRouter extends Router {
   init() {
 this.get('/', ['PUBLIC'], getTickets)
 this.get('/:tid',['USER'], getTicketById)
-this.post('/', ['USER'], createTicket)
+this.post('/', ['PUBLIC'], createTicket)
   
   }}
