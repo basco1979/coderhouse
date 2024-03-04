@@ -74,6 +74,16 @@ export const deleteCart = async (req, res) => {
     const cart = await cartsService.deleteCart(cid)
     res.json(cart)
   } catch (error) {
-    console.log('Error al vaciar el carrito')
+    console.log('Error to empty cart')
+  }
+}
+
+export const purchaseCart = async (req, res) => {
+  let { cid } = req.params
+  try {
+    const cart = await cartsService.purchaseCart(cid)
+    res.status(cart)
+  } catch (error){
+    console.log('Error to make the purchase')
   }
 }

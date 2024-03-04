@@ -1,4 +1,5 @@
 import CartDTO from '../../dtos/cart.dto.js'
+import { productModel } from '../models/product.model.js'
 
 export default class CartRepository {
   constructor(dao) {
@@ -70,6 +71,23 @@ export default class CartRepository {
    const cart = await this.dao.getCartById(id)
    cart.products = []
    await this.dao.updateCart(id, cart)
+  }
+
+  purchaseCart = async(id) => {
+   const cart = await this.dao.getCartById(id)
+    let newCart
+    for (let i = 0; i < cart.products.length; i++) {
+    const product = await productModel.findOne({_id: cart.products[i].product})
+    if(cart.products[i].quantity > product.stock){
+      console.log("Product exceeds stock")
+    }
+    if(cart.products[i].quantity <= product.stock){
+      product.stock -= cart.products[i].quantity
+      await productModel.findOneAndUpdate({_id: product.id}, product);
+      newCart = cart.products.filter((prod) => cart.products[i].product !== prod.product)
+      await this.dao.updateCart(id,{products : newCart})
+    }
+    }
   }
 
 }

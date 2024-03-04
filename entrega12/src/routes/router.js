@@ -42,12 +42,12 @@ export class Router {
         this.router.post(path, this.handlePolicies(polices), this.generateCustomResponses, this.applyCallbacks(callbacks))
     }
     
-    put(path, ...callbacks){
-        this.router.put(path, this.generateCustomResponses, this.applyCallbacks(callbacks))
+    put(path,polices, ...callbacks){
+        this.router.put(path, this.handlePolicies(polices),this.generateCustomResponses, this.applyCallbacks(callbacks))
     }
 
-    delete(path, ...callbacks){
-        this.router.delete(path, this.generateCustomResponses, this.applyCallbacks(callbacks))
+    delete(path,polices, ...callbacks){
+        this.router.delete(path, this.handlePolicies(polices), this.generateCustomResponses, this.applyCallbacks(callbacks))
     }
 
     generateCustomResponses(req, res, next){

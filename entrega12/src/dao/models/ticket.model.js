@@ -7,38 +7,21 @@ const ticketSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    description : {
-        type:String,
+    purchase_datetime : {
+        type:Date,
         required: true
         },
-    price : {
+    amount : {
         type: Number,
         required: true
     },
-    thumbnail : {
-        type: Array  // image url
-    },
-    code: {
+    purchaser: {
         type: String,
         required : true,
-        unique:true,
-    },
-    stock: {
-        type:Number,
-        required: true
-    },
-    status: {
-        type: Boolean,
-        default : true
-    },
-    category: {
-        type : String,
-        required : true
     }
 },
 {
     timestamps: true
 })
 
-ticketSchema.plugin(mongoosePaginate)
 export const ticketModel = mongoose.model(ticketCollection, ticketSchema)

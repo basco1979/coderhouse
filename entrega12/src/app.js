@@ -5,15 +5,16 @@ import session from 'express-session';
 import { Server } from "socket.io";
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
-import cartRouter from "./routes/carts.router.js";
 import mongoose from "mongoose";
 import { messageModel } from "./dao/models/message.model.js";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 import config from './config/config.js';
+import CartsRouter from "./routes/carts.router.js";
 import SessionRouter from './routes/session.routes.js';
 import ProductsRouter from './routes/products.router.js';
 import ViewsRouter from './routes/views.router.js';
+import TicketsRouter from './routes/tickets.routes.js';
 
 
 const PORT = config.port;
@@ -45,13 +46,17 @@ app.engine("handlebars", hbs.engine);
 app.set("views", "src/views");
 app.set("view engine", "handlebars");
 
-const productRouter = new ProductsRouter()
-app.use("/api/products", productRouter.getRouter());
-app.use("/api/carts", cartRouter);
 const viewsRouter = new ViewsRouter()
-app.use("/", viewsRouter.getRouter());
+const productRouter = new ProductsRouter()
+const cartRouter = new CartsRouter()
 const sessionRouter = new SessionRouter();
+const ticketRouter = new TicketsRouter()
+
+app.use("/", viewsRouter.getRouter());
+app.use("/api/products", productRouter.getRouter());
+app.use("/api/carts", cartRouter.getRouter());
 app.use('/api/session', sessionRouter.getRouter());
+app.use('/api/tickets', ticketRouter.getRouter())
 
 mongoose.connect(config.mongoUrl)
 

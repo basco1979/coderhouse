@@ -1,4 +1,5 @@
 import { cartModel } from "../models/cart.model.js";
+import { productModel } from "../models/product.model.js";
 
 export default class Carts {
     constructor(){}
@@ -21,7 +22,7 @@ export default class Carts {
     saveCart = async (cart) => {
         try {
             const result = await cartModel.create(cart);
-            return true;
+            return result;
         } catch (error) {
             console.error(error);
             return false;
@@ -31,7 +32,7 @@ export default class Carts {
     updateCart = async (id, cart) => {
         try {
             const result = await cartModel.findOneAndUpdate({_id: id}, cart);
-            return true;
+            return result;
         } catch (error) {
             return false;
         }
@@ -40,9 +41,10 @@ export default class Carts {
     deleteCart = async (id) => {
         try {
             const result = await cartModel.deleteOne({_id: id});
-            return true;
+            return result;
         } catch (error) {
             return false;
         }
     }
+
 }
