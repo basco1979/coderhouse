@@ -90,7 +90,6 @@ export default class CartRepository {
         product.stock -= cart.products[i].quantity
         await productModel.findOneAndUpdate({ _id: product.id }, product)
         let amount = (cart.products[i].quantity*product.price)
-        console.log(amount)
         ticket.amount = 0
         ticket.amount += amount
         ticket.code = uuid()
