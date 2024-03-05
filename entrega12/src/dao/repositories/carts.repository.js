@@ -1,6 +1,8 @@
 import CartDTO from '../../dtos/cart.dto.js'
 import TicketDTO from '../../dtos/ticket.dto.js'
 import { productModel } from '../models/product.model.js'
+import { ticketModel } from '../models/ticket.model.js';
+import { userModel } from '../models/user.model.js'
 import { uuid } from 'uuidv4';
 
 export default class CartRepository {
@@ -93,11 +95,13 @@ export default class CartRepository {
         ticket.amount = 0
         ticket.amount += amount
         ticket.code = uuid()
-        ticket.purchase_datetime = Date.now()
+        ticket.purchase_datetime = new Date()
+        const user = await userModel.findOne({ cartId: id })
+        ticket.email = user.email
       }
     }
-    console.log(ticket)
     await this.dao.updateCart(id, { products: newCart })
+    await ticketModel.create(ticket)
   }
 
   createTicket = (ticket) => {
