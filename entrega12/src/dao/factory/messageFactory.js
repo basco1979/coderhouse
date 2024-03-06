@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
-import config from "../../config/config.js";
+import { getVariables} from "../../config/config.js";
+import { Command } from "commander";
 
+const program = new Command()
+program.option('--persistence <persistence>')
+const options = program.parse()
+const { mongoUrl, persistence} = getVariables(options)
 let Messages;
 
-switch (config.persistence) {
+switch (persistence) {
     case 'MONGO':
         const {default : MessageMongo} = await import('../mongo/messages.mongo.js');
-        mongoose.connect(config.mongoUrl);
+        mongoose.connect(mongoUrl);
         Messages = MessageMongo;    
         break;
 

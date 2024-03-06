@@ -9,28 +9,33 @@ import mongoose from "mongoose";
 import { messageModel } from "./dao/models/message.model.js";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
-import config from './config/config.js';
+import { getVariables } from './config/config.js';
 import CartsRouter from "./routes/carts.router.js";
 import SessionRouter from './routes/session.routes.js';
 import ProductsRouter from './routes/products.router.js';
 import ViewsRouter from './routes/views.router.js';
 import TicketsRouter from './routes/tickets.routes.js';
+import { Command } from 'commander'
 
 
-const PORT = config.port;
 const app = express();
+const program = new Command()
+program.option('--persistence <persistence>')
+const options = program.parse()
+const { mongoUrl, port, secret} = getVariables(options)
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(session({
-    secret: config.secret,
+    secret: secret,
     store: MongoStore.create({
-        mongoUrl: config.mongoUrl,
+        mongoUrl: mongoUrl,
     }),
     resave: true,
     saveUninitialized: true
 }));
+
 
 initializePassport();
 app.use(passport.initialize())
@@ -58,10 +63,10 @@ app.use("/api/carts", cartRouter.getRouter());
 app.use('/api/session', sessionRouter.getRouter());
 app.use('/api/tickets', ticketRouter.getRouter())
 
-mongoose.connect(config.mongoUrl)
+mongoose.connect(mongoUrl)
 
-const httpServer = app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+const httpServer = app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
 const io = new Server(httpServer)
 
