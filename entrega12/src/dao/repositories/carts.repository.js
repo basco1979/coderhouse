@@ -102,7 +102,6 @@ export default class CartRepository {
     }
     await this.dao.updateCart(id, { products: newCart })
     const ticketGenerated = await ticketModel.create(ticket)
-    console.log(ticketGenerated)
   }
 
 }
