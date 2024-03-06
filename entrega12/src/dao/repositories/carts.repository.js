@@ -95,18 +95,14 @@ export default class CartRepository {
         ticket.amount = 0
         ticket.amount += amount
         ticket.code = uuid()
-        ticket.purchase_datetime = new Date()
+        ticket.purchase_datetime = new Date().toISOString()
         const user = await userModel.findOne({ cartId: id })
-        ticket.email = user.email
+        ticket.purchaser = user.email
       }
     }
     await this.dao.updateCart(id, { products: newCart })
-    await ticketModel.create(ticket)
+    const ticketGenerated = await ticketModel.create(ticket)
+    console.log(ticketGenerated)
   }
 
-  createTicket = (ticket) => {
-    const newTicket = new TicketDTO(ticket)
-    const result = this.dao.createTicket(newTicket) 
-    return result
-  }
 }
