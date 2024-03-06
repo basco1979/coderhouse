@@ -11,6 +11,7 @@ export const login = async (req, res) => {
     age: req.user.age,
     email: req.user.email,
     role: req.user.role ? req.user.role : 'user',
+    cartId: req.user.cartId
   }
   res.redirect('/')
 }

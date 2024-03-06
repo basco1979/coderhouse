@@ -9,7 +9,7 @@
   <script src="js/logout.js"></script>
     <div  style="text-align: center;">
         <h1>Products</h1>
-    <button><a href="/cart/659ae264f4657026ba820e73/">Go to Cart</a></button>
+    <button><a href="/cart/{{cartId}}/">Go to Cart</a></button>
     </div>
     <table>
     <tr>
@@ -28,7 +28,7 @@
         <td>  $ {{this.code}}   </td>
         <td> {{this.stock}} </td>
         <td> {{this.category}} </td>
-        <td> <button><a href="/659ae264f4657026ba820e73/add/{{this._id}}"> Add To Cart </a></button> </td>
+        <td> <button><a href="/{{cartId}}/add/{{this._id}}"> Add To Cart </a></button> </td>
     </tr>
     {{else}}
         <tr class="product">
