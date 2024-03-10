@@ -1,52 +1,52 @@
-import { userNotFound } from "../../services/errors/info.js";
-import { userModel } from "../models/user.model.js";
+import { userNotFound } from '../../services/errors/info.js'
+import { userModel } from '../models/user.model.js'
 
 export default class Users {
-    constructor(){}
+  constructor() {}
 
-    getUsers = async () => {
-        const users = await userModel.find()
-        return users;
-    }
+  getUsers = async () => {
+    const users = await userModel.find()
+    return users
+  }
 
-    getUserByEmail = async (email) => {
-        const user = await userModel.findOne({ email: email })
-        if(!user){
-             CustomErrors.createError({
+  getUserByEmail = async (email) => {
+    const user = await userModel.findOne({ email: email })
+    if (!user) {
+      CustomErrors.createError({
         name: 'user not found',
         cause: userNotFound(),
         message: 'Error - user not found',
         code: ErrorEnum.USER_NOT_FOUND,
       })
-        }
-        return user;
     }
+    return user
+  }
 
-    saveUser = async (user) => {
-        try {
-            const result = await userModel.create(user);
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
+  saveUser = async (user) => {
+    try {
+      const result = await userModel.create(user)
+      return true
+    } catch (error) {
+      console.error(error)
+      return false
     }
+  }
 
-    updateUser = async (id, user) => {
-        try {
-            const result = await userModel.findOneAndUpdate({_id: id}, user);
-            return true;
-        } catch (error) {
-            return false;
-        }
+  updateUser = async (id, user) => {
+    try {
+      const result = await userModel.findOneAndUpdate({ _id: id }, user)
+      return true
+    } catch (error) {
+      return false
     }
+  }
 
-    delete = async (id) => {
-        try {
-            const result = await userModel.deleteOne({_id: id});
-            return true;
-        } catch (error) {
-            return false;
-        }
+  delete = async (id) => {
+    try {
+      const result = await userModel.deleteOne({ _id: id })
+      return true
+    } catch (error) {
+      return false
     }
+  }
 }

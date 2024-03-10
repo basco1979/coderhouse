@@ -58,7 +58,6 @@ passport.use('login', new LocalStrategy(
         },
         async(accesToken, refreshToken, profile, done)=> {
             try {
-                console.log(profile._json)
                 let user = await userModel.findOne({email: profile._json.email})
                 if(!user){
                     let newUser = {

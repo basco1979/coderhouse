@@ -4,7 +4,8 @@ const ErrorEnum = {
     DATABASE_ERROR: 3,
     USER_NOT_FOUND: 4,
     ID_NOT_FOUND: 5,
-    EXCEEDS_STOCK: 6
+    EXCEEDS_STOCK: 6,
+    INVALID_PARAM: 7
 }
 
 export default ErrorEnum;

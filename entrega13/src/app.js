@@ -18,6 +18,7 @@ import TicketsRouter from './routes/tickets.routes.js';
 import { Command } from 'commander'
 import mockingRouter from './routes/mocking.routes.js';
 import { ErrorHandler } from './middlewares/error.js';
+import compression from 'express-compression';
 
 
 const app = express();

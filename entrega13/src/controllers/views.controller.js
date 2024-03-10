@@ -27,7 +27,7 @@ export const getProductsPage = async (req, res) => {
   const products = await productModel.paginate({}, {limit:10,page:page} )
   products.prevLink = `/products/?page=${Number(page)-1 }`
   products.nextLink = `/products/?page=${Number(page)+1 }`
-  res.render('products', {first_name, last_name, role, cartId, products,  title: 'Products', style : 'products.css'})
+  res.render('products', {first_name, last_name, role, cartId, products, cartId,  title: 'Products', style : 'products.css'})
 }
 
 export const addProductToCart = async(req, res) => {

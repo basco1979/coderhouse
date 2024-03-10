@@ -1,8 +1,8 @@
 <h1>Login user</h1>
 
 <form action="/api/session/login" method="post">
-    <label for="">Email: </label> <input type="email" name="email" /> <br /><br /> 
-    <label for="">Password: </label> <input type="password" name="password" /> <br /><br /> 
+    <label for="">Email: </label> <input type="email" name="email" required /> <br /><br /> 
+    <label for="">Password: </label> <input type="password" name="password" required /> <br /><br /> 
     <button type="submit">Log In</button>
     <button type="button"><a href="/api/session/github">Login with GitHub</a></button> 
     <button type="button"><a href="/restore-password">Forgot Password?</a></button>

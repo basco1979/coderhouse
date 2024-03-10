@@ -20,3 +20,7 @@ export const userNotFound = () => {
 export const productExceedsStock = () => {
     return "You're trying to add more quantity than product stocks"
 }
+
+export const invalidParam = (id) => {
+    return `Id must be a 24 character length - ID : ${id}`
+}
