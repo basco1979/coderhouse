@@ -1,3 +1,4 @@
+import { userNotFound } from "../../services/errors/info.js";
 import { userModel } from "../models/user.model.js";
 
 export default class Users {
@@ -10,6 +11,14 @@ export default class Users {
 
     getUserByEmail = async (email) => {
         const user = await userModel.findOne({ email: email })
+        if(!user){
+             CustomErrors.createError({
+        name: 'user not found',
+        cause: userNotFound(),
+        message: 'Error - user not found',
+        code: ErrorEnum.USER_NOT_FOUND,
+      })
+        }
         return user;
     }
 

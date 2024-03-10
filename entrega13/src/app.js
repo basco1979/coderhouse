@@ -17,6 +17,7 @@ import ViewsRouter from './routes/views.router.js';
 import TicketsRouter from './routes/tickets.routes.js';
 import { Command } from 'commander'
 import mockingRouter from './routes/mocking.routes.js';
+import { ErrorHandler } from './middlewares/error.js';
 
 
 const app = express();
@@ -28,6 +29,10 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(compression({
+    brotli: {enabled: true, zlib: {}}
+}));
+
 app.use(session({
     secret: secret,
     store: MongoStore.create({
@@ -36,7 +41,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-
 
 initializePassport();
 app.use(passport.initialize())
@@ -64,6 +68,7 @@ app.use("/api/carts", cartRouter.getRouter());
 app.use('/api/session', sessionRouter.getRouter());
 app.use('/api/tickets', ticketRouter.getRouter())
 app.use('/mockingproducts', mockingRouter)
+app.use(ErrorHandler)
 
 mongoose.connect(mongoUrl)
 
