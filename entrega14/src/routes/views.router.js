@@ -34,7 +34,6 @@ viewsRouter.get("/cart/:cid", isUser, getCartDetailPage);
 
 viewsRouter.get(
   "/restore-password",
-  isUser,
   checkExistingUser,
   restorePassword
 );

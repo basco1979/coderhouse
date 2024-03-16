@@ -74,7 +74,7 @@ app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/tickets', ticketsRouter)
 app.use('/mockingproducts', mockingRouter)
-app.use(ErrorHandler)
+//app.use(ErrorHandler)
 
 mongoose.connect(mongoUrl)
 
