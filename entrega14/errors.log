@@ -3,8 +3,5 @@
 {"level":"warning","message":"Warning message"}
 {"level":"error","message":"Error message"}
 {"level":"fatal","message":"Fatal message"}
-{"level":"info","message":"Info message"}
-{"level":"warning","message":"Warning message"}
-{"level":"error","message":"Error message"}
-{"level":"fatal","message":"Fatal message"}
 {"level":"error","message":"13:32:49 - Error to restore password"}
+{"level":"error","message":"18:33:32 - Error to get product"}

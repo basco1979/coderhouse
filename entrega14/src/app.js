@@ -62,10 +62,10 @@ app.set("view engine", "handlebars");
 // Routing
 app.use(addLogger)
 app.get('/loggerTest', (req, res) =>{
-    req.logger.info("Info message")
-    req.logger.warning("Warning message")
-    req.logger.error("Error message")
-    req.logger.fatal("Fatal message")
+    req.logger.info(`${new Date().toLocaleTimeString()} -Info message`)
+    req.logger.warning(`${new Date().toLocaleTimeString()} -Warning message`)
+    req.logger.error(`${new Date().toLocaleTimeString()} -Error message`)
+    req.logger.fatal(`${new Date().toLocaleTimeString()} -Fatal message`)
     res.send({message: "Error"})
 })
 app.use("/", viewsRouter);
