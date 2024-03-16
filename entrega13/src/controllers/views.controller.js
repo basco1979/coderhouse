@@ -37,7 +37,8 @@ export const addProductToCart = async(req, res) => {
         res.redirect('/products');
     }
     catch(err){
-        console.log("Error al agregar el producto");
+      req.logger.error(`${new Date().toLocaleTimeString()} -Error to add product to cart` + err)
+      res.status(500).send("Internal Server Error")
     }
 }
 
@@ -48,12 +49,12 @@ export const getCartDetailPage = async(req, res) => {
   //console.log(subtotal)
   if (cart) {
     if(cart.products.length < 1){
-      res.send({message : "Carrito Vacío"})
+      res.send({message : "Empty Cart"})
     }
     else{
       res.render('cart', {cart})}
     }
-  else res.status(404).send({ error: 'Carrito no encontrado' })
+  else res.status(404).send({ error: 'Cart not found' })
 }
 
 export const restorePassword = (req, res) => {
@@ -65,5 +66,17 @@ export const getFailRegisterPage = (req, res) => {
 }
 
 export const getFailLoginPage = (req, res) => {
-    res.render('loginregister')
+    res.render('faillogin')
+}
+
+export const createProductPage = (req, res) => {
+  res.render('create-product')
+}
+
+export const updateProductPage = (req, res) => {
+  res.render('update-product')
+}
+
+export const deleteProductPage = (req, res) => {
+  res.render('delete-product')
 }

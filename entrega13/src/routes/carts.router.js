@@ -1,23 +1,23 @@
-import { Router } from './router.js'
-
+import { Router } from 'express'
+import { isUser} from '../middlewares/auth.js'
 import { deleteCart, deleteProductInCart, getCartById, saveCart, postProductInCart, putCart, putProductInCart, purchaseCart } from '../controllers/carts.controller.js'
 
-export default class CartsRouter extends Router {
-  init() {
+const cartsRouter = Router()
 
-this.post('/', ['USER'], saveCart)
+cartsRouter.post('/', isUser , saveCart)
 
-this.get('/:cid',['USER'], getCartById)
+cartsRouter.get('/:cid', isUser , getCartById)
 
-this.post('/:cid/product/:pid',['USER'], postProductInCart)
+cartsRouter.post('/:cid/product/:pid', isUser , postProductInCart)
 
-this.delete('/:cid/product/:pid',['USER'], deleteProductInCart)
+cartsRouter.delete('/:cid/product/:pid', isUser , deleteProductInCart)
 
-this.put('/:cid',['USER'], putCart)
+cartsRouter.put('/:cid', isUser , putCart)
 
-this.put('/:cid/product/:pid',['USER'], putProductInCart)
+cartsRouter.put('/:cid/product/:pid', isUser , putProductInCart)
 
-this.put('/:cid/purchase', ['PUBLIC'],  purchaseCart)
+cartsRouter.put('/:cid/purchase', isUser, purchaseCart)
 
-this.delete('/:cid',['USER'], deleteCart)
-  }}
+cartsRouter.delete('/:cid', isUser , deleteCart)
+
+export default cartsRouter

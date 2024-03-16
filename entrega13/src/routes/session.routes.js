@@ -1,38 +1,35 @@
-import { Router } from './router.js'
+import { Router } from 'express'
 import passport from 'passport'
+import { isAdmin} from '../middlewares/auth.js'
 import { adminProducts, currentUser, login, register, logout, restorePassword } from '../controllers/session.controller.js';
 
+const sessionRouter = Router()
 
-
-export default class SessionRouter extends Router {
-  init() {
-    this.post(
+    sessionRouter.post(
       '/login',
-      ['PUBLIC'],
       passport.authenticate('login', { failureRedirect: '/faillogin' }),
       login
     )
 
-    this.post(
+    sessionRouter.post(
       '/register',
-      ['PUBLIC'],
       passport.authenticate('register', { failureRedirect: '/failregister' }),
      register
     )
 
-this.get('/github', ['PUBLIC'], passport.authenticate('github', {scope: ['user:email']}), async(req, res)=> {})
-this.get('/githubcallback',['PUBLIC'], passport.authenticate('github', {failureRedirect: '/login'}), async(req, res)=> {
+sessionRouter.get('/github', passport.authenticate('github', {scope: ['user:email']}), async(req, res)=> {})
+sessionRouter.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), async(req, res)=> {
     req.session.user = req.user
     res.redirect('/')
 })
 
-this.post('/logout',['USER', 'ADMIN'], logout);
+sessionRouter.post('/logout', logout);
 
-this.post('/restore-password', ['PUBLIC'], restorePassword)
+sessionRouter.post('/restore-password', restorePassword)
 
-this.get('/current', ['USER', 'ADMIN'], currentUser)
+sessionRouter.get('/current', currentUser)
 
-this.get('/admin', ['ADMIN'], adminProducts)
+sessionRouter.get('/admin', isAdmin , adminProducts)
 
-  }
-}
+export default sessionRouter;
+

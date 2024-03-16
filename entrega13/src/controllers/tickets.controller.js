@@ -8,7 +8,7 @@ res.send(tickets);
 export const getTicketById = async (req, res) => {
   const tid = req.params.tid
   const ticket = await ticketsService.getTicketById(tid)
-  if (ticket) {
+  if (!ticket) {
       res.send({ message: 'Ticket Not found' })
     } else {
       res.send({ ticket })
@@ -23,6 +23,7 @@ export const createTicket = async (req, res) => {
     const result = await ticketsService.createTicket(ticket)
     res.send(result)
   } catch (err) {
-    console.log('Error to create ticket')
+    req.logger.error(`${new Date().toLocaleTimeString()} -Error to create ticket` + err)
+    res.status(500).send('ticket error')
   }
 }

@@ -1,4 +1,3 @@
-import { generateSingleIdError } from '../../services/errors/info.js'
 import { productModel } from '../models/product.model.js'
 
 export default class Products {

@@ -12,6 +12,7 @@ return{
     adminName: process.env.ADMIN_EMAIL,
     adminPassword: process.env.ADMIN_PASSWORD,
     secret: process.env.SECRET,
+    environment: process.env.NODE_ENV,
     persistence : persistence
 }
 

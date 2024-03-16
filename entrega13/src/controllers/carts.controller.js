@@ -6,7 +6,7 @@ export const saveCart = async (req, res) => {
     const result = await cartsService.saveCart(cart)
     res.send(result)
   } catch (err) {
-    console.log('Error to add cart')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to add cart`)
   }
 }
 
@@ -15,6 +15,7 @@ export const getCartById = async (req, res) => {
   const cart = await cartsService.getCartById(cid)
   if (cart) {
     if (cart.products.length < 1) {
+      req.logger.info(`${new Date().toLocaleTimeString()} - Empty Cart`)
       res.send({ message: 'Empty Cart' })
     } else {
       res.send({ cart })
@@ -30,7 +31,7 @@ export const postProductInCart = async (req, res) => {
 
     res.send(result)
   } catch (err) {
-    console.log('Error to add product')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to add product`)
   }
 }
 
@@ -41,7 +42,7 @@ export const deleteProductInCart = async (req, res) => {
     const result = await cartsService.deleteProductInCart(cid, pid)
     res.send(result)
   } catch (err) {
-    console.log('Error to delete product')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to delete product`)
   }
 }
 
@@ -50,10 +51,11 @@ export const putCart = async (req, res) => {
   const { cid } = req.params
   const newCart = req.body
   try {
-    await cartsService.updateCart(cid, newCart)
-    res.json({ message: 'Carrito actualizado' })
+    const cartUpdated = await cartsService.updateCart(cid, newCart)
+    req.logger.info(`${new Date().toLocaleTimeString()} - Cart Updated`)
+    res.status(201).json(cartUpdated)
   } catch (error) {
-    console.log('Error al actualizar el producto')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to update product`)
   }
 }
 
@@ -61,10 +63,11 @@ export const putProductInCart = async (req, res) => {
   const { cid, pid } = req.params
   const quantity = req.body.quantity
   try {
-    await cartsService.putProductInCart(cid, pid, quantity)
-    res.json({message: "Cart Updated"})
+    const cartUpdated = await cartsService.putProductInCart(cid, pid, quantity)
+    req.logger.info(`${new Date().toLocaleTimeString()} - Cart Updated`)
+    res.status(201).json(cartUpdated)
   } catch (error) {
-    console.log('Error al actualizar el producto')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to update product`)
   }
 }
 
@@ -74,7 +77,7 @@ export const deleteCart = async (req, res) => {
     const cart = await cartsService.deleteCart(cid)
     res.json(cart)
   } catch (error) {
-    console.log('Error to empty cart')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to empty cart`)
   }
 }
 
@@ -84,6 +87,6 @@ export const purchaseCart = async (req, res) => {
     const cart = await cartsService.purchaseCart(cid)
     res.status(cart)
   } catch (error){
-    console.log('Error to make the purchase')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to make the purchase`)
   }
 }

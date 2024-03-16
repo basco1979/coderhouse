@@ -1,6 +1,7 @@
 import { createHash } from '../utils/bcrypt.js'
 
 export const login = async (req, res) => {
+  console.log(req)
   if (!req.user) {
     res.status(400).send({ message: 'Error with credentials' })
   }
@@ -24,11 +25,13 @@ export const logout = async (req, res) => {
   try {
     req.session.destroy((err) => {
       if (err) {
+        req.logger.error(`${new Date().toLocaleTimeString()} - Error to logout`)  
         return res.status(500).json({ message: 'Logout failed' })
       }
     })
     res.send({ redirect: 'http://localhost:8080/login' })
   } catch (error) {
+        req.logger.error(`${new Date().toLocaleTimeString()} - Error to logout`)  
     res.status(400).send({ error })
   }
 }
@@ -39,13 +42,14 @@ export const restorePassword = async (req, res) => {
   try {
     const user = await userModel.findOne({ email })
     if (!user) {
+      req.logger.error(`${new Date().toLocaleTimeString()} - User not found`)  
       return res.status(401).send({ message: 'User not found' })
     }
     user.password = createHash(password)
     await user.save()
     res.send({ message: 'Password updated' })
   } catch (error) {
-    console.log(error)
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to restore password`)  
     res.status(400).send({ error })
   }
 }

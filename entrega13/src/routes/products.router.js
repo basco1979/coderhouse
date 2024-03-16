@@ -1,22 +1,19 @@
-import { Router } from './router.js'
+import { Router } from "express";
+import { isAdmin} from '../middlewares/auth.js'
 import {
   deleteProduct,
   getProductById,
   getProducts,
   createProduct,
   updateProduct,
-} from '../controllers/products.controller.js'
+} from "../controllers/products.controller.js";
 
-export default class ProductsRouter extends Router {
-  init() {
-    this.get('/',['PUBLIC'], getProducts)
+const productsRouter = Router();
 
-    this.get('/:pid',['PUBLIC'], getProductById)
+productsRouter.get("/", getProducts);
+productsRouter.get("/:pid", getProductById);
+productsRouter.post("/", isAdmin, createProduct);
+productsRouter.put("/:pid", isAdmin, updateProduct);
+productsRouter.delete("/:pid", isAdmin, deleteProduct);
 
-    this.post('/', ['ADMIN'], createProduct)
-
-    this.put('/:pid', ['ADMIN'], updateProduct)
-
-    this.delete('/:pid', ['ADMIN'], deleteProduct)
-  }
-}
+export default productsRouter;

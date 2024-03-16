@@ -10,15 +10,16 @@ import { messageModel } from "./dao/models/message.model.js";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 import { getVariables } from './config/config.js';
-import CartsRouter from "./routes/carts.router.js";
-import SessionRouter from './routes/session.routes.js';
-import ProductsRouter from './routes/products.router.js';
-import ViewsRouter from './routes/views.router.js';
-import TicketsRouter from './routes/tickets.routes.js';
-import { Command } from 'commander'
+import cartsRouter from './routes/carts.router.js';
+import sessionRouter from './routes/session.routes.js';
+import productsRouter from './routes/products.router.js';
+import viewsRouter from './routes/views.router.js';
+import ticketsRouter from './routes/tickets.routes.js';
 import mockingRouter from './routes/mocking.routes.js';
+import { Command } from 'commander'
 import { ErrorHandler } from './middlewares/error.js';
 import compression from 'express-compression';
+import { addLogger } from './utils/logger.js';
 
 
 const app = express();
@@ -26,6 +27,7 @@ const program = new Command()
 program.option('--persistence <persistence>')
 const options = program.parse()
 const { mongoUrl, port, secret} = getVariables(options)
+
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -57,17 +59,20 @@ app.engine("handlebars", hbs.engine);
 app.set("views", "src/views");
 app.set("view engine", "handlebars");
 
-const viewsRouter = new ViewsRouter()
-const productRouter = new ProductsRouter()
-const cartRouter = new CartsRouter()
-const sessionRouter = new SessionRouter();
-const ticketRouter = new TicketsRouter()
-
-app.use("/", viewsRouter.getRouter());
-app.use("/api/products", productRouter.getRouter());
-app.use("/api/carts", cartRouter.getRouter());
-app.use('/api/session', sessionRouter.getRouter());
-app.use('/api/tickets', ticketRouter.getRouter())
+// Routing
+app.use(addLogger)
+app.get('/loggerTest', (req, res) =>{
+    req.logger.info("Info message")
+    req.logger.warning("Warning message")
+    req.logger.error("Error message")
+    req.logger.fatal("Fatal message")
+    res.send({message: "Error"})
+})
+app.use("/", viewsRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
+app.use('/api/session', sessionRouter);
+app.use('/api/tickets', ticketsRouter)
 app.use('/mockingproducts', mockingRouter)
 app.use(ErrorHandler)
 

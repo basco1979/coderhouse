@@ -9,7 +9,7 @@ export const getProducts = async (req, res) => {
   let { limit, page, sort, query } = req.query
   if (limit || page || sort || query) {
     if (sort === undefined && query === undefined) {
-      listado = await productsService.paginate(
+      listado = await productModel.paginate(
         {},
         {
           limit: limit ? limit : 10,
@@ -155,6 +155,7 @@ export const getProductById = async (req, res) => {
           message: 'Id must be a 24 character length',
           code: ErrorEnum.INVALID_PARAM,
     })
+    req.logger.error(`${new Date().toLocaleTimeString()} - Id must be a 24 character length`)
   }
   try {
     const product = await productsService.getProductById(pid)
@@ -166,10 +167,11 @@ export const getProductById = async (req, res) => {
           message: 'Id does not exists',
           code: ErrorEnum.ID_NOT_FOUND,
         })
+        req.logger.error(`${new Date().toLocaleTimeString()} - Id does not exists`)    
     }
   
   } catch (error) {
-    console.error(error)
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to get product`)  
   }
 }
 
@@ -185,6 +187,7 @@ export const createProduct = async (req, res) => {
       message: 'Error trying to create product',
       code: ErrorEnum.INVALID_TYPE_ERROR,
     })
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to create product`)  
   }
 }
 
@@ -195,7 +198,7 @@ export const updateProduct = async (req, res) => {
     const result = await productsService.updateProduct(productId, product)
     res.send(result)
   } catch (err) {
-    console.log('Error al actualizar el producto')
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to update product`)  
   }
 }
 
@@ -205,6 +208,6 @@ export const deleteProduct = async (req, res) => {
     const result = await productsService.deleteProduct(product)
     res.send(result)
   } catch (err) {
-    console.log('error', err)
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to delete product`)  
   }
 }
