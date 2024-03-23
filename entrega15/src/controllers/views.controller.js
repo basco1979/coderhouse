@@ -67,7 +67,8 @@ export const getCartDetailPage = async (req, res) => {
 };
 
 export const restorePassword = (req, res) => {
-  res.render("restore-password");
+  const {email, token} = req.query
+  res.render("restore-password", {email, token});
 };
 
 export const sendEmail = (req, res) => {

@@ -1,5 +1,6 @@
 import { productModel } from '../dao/models/product.model.js'
-import { createHash } from '../utils/bcrypt.js'
+import { userModel } from '../dao/models/user.model.js'
+import { createHash, isValidPassword } from '../utils/bcrypt.js'
 import { generateToken } from '../utils/token.js'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
@@ -77,8 +78,8 @@ export const sendEmail = async (req, res) => {
       html: `
                 <div>
                     <h1>Hi!</h1>
+                <a href="http://localhost:8080/restore-password?email=${email}&&token=${token}">Restore Password</a>
                 </div>
-                <button href='http://localhost:8080/restore-password?email=${email}&&token=${token}'>Restore Password</button>
             `,
             attachments:[]
     });
@@ -102,8 +103,7 @@ export const restorePassword = async (req, res) => {
     if(!token){
       res.redirect('/send-email')
     }
-    const verifyPassword = createHash(password) === user.password
-    if(!verifyPassword){
+    if(!isValidPassword(user, password)){
     user.password = createHash(password)
     await user.save()
     res.send({ message: 'Password updated' })
