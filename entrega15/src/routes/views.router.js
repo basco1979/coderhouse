@@ -13,7 +13,8 @@ import {
   restorePassword,
   createProductPage,
   updateProductPage,
-  deleteProductPage
+  deleteProductPage,
+  sendEmail
 
 } from "../controllers/views.controller.js";
 
@@ -36,6 +37,11 @@ viewsRouter.get(
   "/restore-password",
   checkExistingUser,
   restorePassword
+);
+
+viewsRouter.get(
+  "/send-email",
+  sendEmail
 );
 
 viewsRouter.get("/failregister", getFailRegisterPage);

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import passport from 'passport'
 import { isAdmin} from '../middlewares/auth.js'
-import { adminProducts, currentUser, login, register, logout, restorePassword } from '../controllers/session.controller.js';
+import { adminProducts, currentUser, login, register, logout, restorePassword, sendEmail } from '../controllers/session.controller.js';
 
 const sessionRouter = Router()
 
@@ -26,6 +26,8 @@ sessionRouter.get('/githubcallback', passport.authenticate('github', {failureRed
 sessionRouter.post('/logout', logout);
 
 sessionRouter.post('/restore-password', restorePassword)
+
+sessionRouter.post('/send-email', sendEmail)
 
 sessionRouter.get('/current', currentUser)
 

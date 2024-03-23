@@ -27,7 +27,7 @@ const app = express();
 const program = new Command()
 program.option('--persistence <persistence>')
 const options = program.parse()
-const { mongoUrl, port, secret} = getVariables(options)
+const { mongoUrl, port, secret, gmail} = getVariables(options)
 
 app.use(cors())
 app.use(express.json());
@@ -65,6 +65,8 @@ app.engine("handlebars", hbs.engine);
 app.set("views", "src/views");
 app.set("view engine", "handlebars");
 
+
+
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
 
@@ -83,7 +85,7 @@ app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/tickets', ticketsRouter)
 app.use('/mockingproducts', mockingRouter)
-app.use(ErrorHandler)
+//app.use(ErrorHandler)
 
 mongoose.connect(mongoUrl)
 

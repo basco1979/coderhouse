@@ -70,6 +70,10 @@ export const restorePassword = (req, res) => {
   res.render("restore-password");
 };
 
+export const sendEmail = (req, res) => {
+  res.render("send-email");
+};
+
 export const getFailRegisterPage = (req, res) => {
   res.render("failregister");
 };
