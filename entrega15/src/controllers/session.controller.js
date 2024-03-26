@@ -3,6 +3,7 @@ import { userModel } from '../dao/models/user.model.js'
 import { createHash, isValidPassword } from '../utils/bcrypt.js'
 import { generateToken } from '../utils/token.js'
 import nodemailer from 'nodemailer'
+import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 dotenv.config()

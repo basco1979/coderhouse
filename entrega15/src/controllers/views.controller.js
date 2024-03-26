@@ -1,5 +1,9 @@
 import CartManagerDB from "../dao/cartManagerDB.js";
 import { productModel } from "../dao/models/product.model.js";
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+
+dotenv.config()
 
 const cartManager = new CartManagerDB();
 
@@ -67,9 +71,18 @@ export const getCartDetailPage = async (req, res) => {
 };
 
 export const restorePassword = (req, res) => {
-  const {email, token} = req.query
-  res.render("restore-password", {email, token});
-};
+  let {email, token} = req.query
+  try{
+  jwt.verify(token, process.env.SECRET, function(err, decoded) {
+  if (err) {
+    return res.redirect('send-email')
+  }
+  else{
+    return res.render('restore-password', {email, token})
+  }
+});
+  }catch(err){console.log(err)}
+  }
 
 export const sendEmail = (req, res) => {
   res.render("send-email");
