@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isAdmin} from '../middlewares/auth.js'
+import { isAdmin, isAdminOrPremium} from '../middlewares/auth.js'
 import {
   deleteProduct,
   getProductById,
@@ -12,7 +12,7 @@ const productsRouter = Router();
 
 productsRouter.get("/", getProducts);
 productsRouter.get("/:pid", getProductById);
-productsRouter.post("/", isAdmin, createProduct);
+productsRouter.post("/", isAdminOrPremium, createProduct);
 productsRouter.put("/:pid", isAdmin, updateProduct);
 productsRouter.delete("/:pid", isAdmin, deleteProduct);
 

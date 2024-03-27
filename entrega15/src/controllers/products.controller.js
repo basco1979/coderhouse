@@ -177,10 +177,16 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   const product = req.body
+  product.owner = req.user.email ? req.user.email : "admin"
+  console.log(product)
   try {
     const result = await productsService.createProduct(product)
-    res.redirect('/api/session/admin')
-    
+    if(product.owner ===  "admin"){
+    return res.redirect('/api/session/admin')
+    }
+    else{
+      return res.redirect('/products')
+    }
   } catch (err) {
 /*     CustomErrors.createError({
       name: 'product creation failed',

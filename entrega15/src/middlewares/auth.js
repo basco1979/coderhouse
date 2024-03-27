@@ -30,10 +30,25 @@ export const isUser = (req, res, next) =>{
 }
 
 export const isUserOrAdmin = (req, res, next) =>{
-    if(req.session?.user?.role !== "user" && req.session?.user?.role !== "admin"){
+    if(req.session?.user?.role !== "user" && req.session?.user?.role !== "admin" && req.session?.user?.role !== "premium"){
         return res.status(403).json({error : 'Forbidden'})
     }else{
         next()
     }
 }
 
+export const isAdminOrPremium = (req, res, next) =>{
+    if(req.session?.user?.role !== "admin" && req.session?.user?.role !== "premium"){
+        return res.status(403).json({error : 'Forbidden'})
+    }else{
+        next()
+    }
+}
+
+export const isPremium = (req, res, next) =>{
+    if(req.session?.user?.role !== "premium"){
+        return res.status(403).json({error : 'Forbidden'})
+    }else{
+        next()
+    }
+}
