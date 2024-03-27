@@ -21,6 +21,7 @@ import { ErrorHandler } from './middlewares/error.js';
 import compression from 'express-compression';
 import { addLogger } from './utils/logger.js';
 import methodOverride from 'method-override'
+import usersRouter from './routes/user.routes.js';
 
 
 const app = express();
@@ -85,6 +86,7 @@ app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/tickets', ticketsRouter)
 app.use('/mockingproducts', mockingRouter)
+app.use('/api/users',  usersRouter)
 //app.use(ErrorHandler)
 
 mongoose.connect(mongoUrl)

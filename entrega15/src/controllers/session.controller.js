@@ -4,6 +4,7 @@ import { createHash, isValidPassword } from '../utils/bcrypt.js'
 import { generateToken } from '../utils/token.js'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
+import { usersService } from '../dao/repositories/index.js'
 
 dotenv.config()
 
@@ -119,5 +120,17 @@ export const restorePassword = async (req, res) => {
   } catch (error) {
     req.logger.error(`${new Date().toLocaleTimeString()} - Error to restore password`)  
     res.status(400).send({ error })
+  }
+}
+
+export const userToPremium = async (req, res)=> {
+  const { uid } = req.params;
+  try {
+    const user = await userModel.findOne({ _id : uid })
+    user.role = user.role === 'premium' ? user.role = 'user' : user.role = 'premium'
+    const result = await usersService.updateUser(uid, user)
+    res.send({message : `User role updated to ${user.role} `})
+  } catch (error) {
+    req.logger.error(`${new Date().toLocaleTimeString()} - Error to update user`)  
   }
 }
