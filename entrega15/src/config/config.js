@@ -12,7 +12,8 @@ return{
     secret: process.env.SECRET,
     environment: process.env.NODE_ENV,
     persistence : persistence,
-    gmail: process.env.GMAIL
+    gmail: process.env.GMAIL,
+    jwt: process.env.JWT_COOKIE
 }
 
 }

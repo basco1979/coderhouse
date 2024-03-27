@@ -1,3 +1,5 @@
+import { productModel } from '../dao/models/product.model.js'
+import { userModel } from '../dao/models/user.model.js'
 import { cartsService } from '../dao/repositories/index.js'
 
 export const saveCart = async (req, res) => {
@@ -24,12 +26,16 @@ export const getCartById = async (req, res) => {
 }
 
 export const postProductInCart = async (req, res) => {
-  const { cid } = req.params
-  const { pid } = req.params
+const { pid, cid } = req.params;
   try {
+   const prod = await productModel.findOne({ _id: pid })
+    const user = await userModel.findOne({ cartId: cid })
+    if (prod.owner !== user.email) {
     const result = await cartsService.addProductToCart(cid, pid)
-
-    res.send(result)
+    res.redirect("/products");
+    } else {
+     return res.status(403).json({message:"You can't put your own products in the shopping cart"})
+    }
   } catch (err) {
     req.logger.error(`${new Date().toLocaleTimeString()} - Error to add product`)
   }

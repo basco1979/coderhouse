@@ -25,3 +25,7 @@ export const productExceedsStock = () => {
 export const invalidParam = (id) => {
     return `Id must be a 24 character length - ID : ${id}`
 }
+
+export const userPremiumTryingToAddOwnProduct = () => {
+    return `User is trying to add  his own product`
+}

@@ -1,11 +1,9 @@
-import CartManagerDB from "../dao/cartManagerDB.js";
 import { productModel } from "../dao/models/product.model.js";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
+import { cartsService } from "../dao/repositories/index.js";
 
 dotenv.config()
-
-const cartManager = new CartManagerDB();
 
 export const getIndexPage = (req, res) => {
   const { user } = req.session;
@@ -43,22 +41,9 @@ export const getProductsPage = async (req, res) => {
   });
 };
 
-export const addProductToCart = async (req, res) => {
-  const { pid, cid } = req.params;
-  try {
-    await cartManager.addProductToCart(cid, pid);
-    res.redirect("/products");
-  } catch (err) {
-    req.logger.error(
-      `${new Date().toLocaleTimeString()} -Error to add product to cart` + err
-    );
-    res.status(500).send("Internal Server Error");
-  }
-};
-
 export const getCartDetailPage = async (req, res) => {
   const { cid } = req.params;
-  const cart = await cartManager.getCartById(cid);
+  const cart = await cartsService.getCartById(cid)
   //let subtotal = cart.products.forEach(item => Number(item.quantity) * Number(item.product.price))
   //console.log(subtotal)
   if (cart) {

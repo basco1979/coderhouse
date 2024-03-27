@@ -200,20 +200,33 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   const productId = req.params.pid
-  const product = req.body
+  const product = await productModel.findOne({ _id: productId})
+  const newProduct = req.body
   try {
-    const result = await productsService.updateProduct(productId, product)
+   if(req.user.role === 'admin' || product.owner === req.user.email){
+    const result = await productsService.updateProduct(productId, newProduct)
     res.send(result)
+    }
+    else{
+      res.send({message: "Unauthorized to update this product"})
+    }
   } catch (err) {
     req.logger.error(`${new Date().toLocaleTimeString()} - Error to update product`)  
   }
 }
 
 export const deleteProduct = async (req, res) => {
-  const product = req.params.pid
+  const productToDelete = req.params.pid
+  const product = await productModel.findOne({ _id: req.params.pid})
+
   try {
-    const result = await productsService.deleteProduct(product)
+    if(req.user.role === 'admin' || product.owner === req.user.email){
+    const result = await productsService.deleteProduct(productToDelete)
     res.send(result)
+    }
+    else{
+      res.send({message: "Unauthorized to update this product"})
+    }
   } catch (err) {
     req.logger.error(`${new Date().toLocaleTimeString()} - Error to delete product`)  
   }

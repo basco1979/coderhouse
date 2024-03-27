@@ -10,7 +10,7 @@ export default class Carts {
   }
 
   getCartById = async (id) => {
-    const result = await cartModel.findOne({ _id: id })
+    const result = await cartModel.findById({_id : id}).populate('products').populate('products.product')
     if (!result) {
       CustomErrors.createError({
         name: 'find cart failed',

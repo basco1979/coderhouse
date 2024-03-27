@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import passport from 'passport'
-import { isAdmin} from '../middlewares/auth.js'
+import { applyPolicies} from '../middlewares/auth.js'
 import { adminProducts, currentUser, login, register, logout, restorePassword, sendEmail } from '../controllers/session.controller.js';
 
 const sessionRouter = Router()
@@ -29,9 +29,11 @@ sessionRouter.post('/restore-password', restorePassword)
 
 sessionRouter.post('/send-email', sendEmail)
 
-sessionRouter.get('/current', currentUser)
+sessionRouter.get('/current', applyPolicies(['ADMIN', 'USER', 'PREMIUM']), currentUser)
 
-sessionRouter.get('/admin', isAdmin , adminProducts)
+sessionRouter.get('/admin', applyPolicies(['ADMIN']) , adminProducts)
+
+//sessionRouter.post('/current', passport.authenticate('current', {session: false}), getCurrentUser) 
 
 export default sessionRouter;
 

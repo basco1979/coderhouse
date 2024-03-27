@@ -3,7 +3,6 @@ import { userModel } from '../dao/models/user.model.js'
 import { createHash, isValidPassword } from '../utils/bcrypt.js'
 import { generateToken } from '../utils/token.js'
 import nodemailer from 'nodemailer'
-import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -53,6 +52,11 @@ export const currentUser = async (req, res) => {
     role: req.user.role ? req.user.role : 'user',
   })
 }
+
+/* export const getCurrentUser = async (req, res) => {
+  res.send(req.user)
+}
+ */
 
 export const adminProducts = async(req, res) => {
   const products = await productModel.find()

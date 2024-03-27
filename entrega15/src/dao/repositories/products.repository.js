@@ -1,5 +1,4 @@
 import ProductDTO from '../../dtos/product.dto.js'
-import CustomErrors from '../../services/errors/CustomError.js'
 
 export default class ProductRepository {
   constructor(dao) {
