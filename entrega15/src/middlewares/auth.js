@@ -26,7 +26,7 @@ export const applyPolicies = (roles) => {
         return next()
     }
 }
-
+/* 
 export const isAdmin = (req, res, next) =>{
     if(req.session?.user?.role !== "admin"){
         req.logger.warning()
@@ -67,3 +67,4 @@ export const isPremium = (req, res, next) =>{
         next()
     }
 }
+ */
