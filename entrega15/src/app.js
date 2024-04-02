@@ -28,7 +28,7 @@ const app = express();
 const program = new Command()
 program.option('--persistence <persistence>')
 const options = program.parse()
-const { mongoUrl, port, secret, gmail} = getVariables(options)
+const { mongoUrl, port, secret } = getVariables(options)
 
 app.use(cors())
 app.use(express.json());
@@ -57,7 +57,7 @@ const hbs = handlebars.create({
     },
 })
 
-// register new function
+// register new handlebars function
 hbs.handlebars.registerHelper('isAdmin', function(role) {
   return role === 'admin';
 })
@@ -66,12 +66,10 @@ app.engine("handlebars", hbs.engine);
 app.set("views", "src/views");
 app.set("view engine", "handlebars");
 
-
-
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
 
-// Routing
+//Logger
 app.use(addLogger)
 app.get('/loggerTest', (req, res) =>{
     req.logger.info(`${new Date().toLocaleTimeString()} -Info message`)
@@ -80,6 +78,7 @@ app.get('/loggerTest', (req, res) =>{
     req.logger.fatal(`${new Date().toLocaleTimeString()} -Fatal message`)
     res.send({message: "Error"})
 })
+//Routing
 app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
@@ -94,8 +93,9 @@ mongoose.connect(mongoUrl)
 const httpServer = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-const io = new Server(httpServer)
 
+//WebSockets
+const io = new Server(httpServer)
 io.on('connect', socket => {
     console.log("Nuevo Cliente Conectado")
     socket.on('message', async (data) => {

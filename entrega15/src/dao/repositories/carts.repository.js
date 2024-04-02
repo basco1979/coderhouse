@@ -2,7 +2,6 @@ import CartDTO from '../../dtos/cart.dto.js'
 import CustomErrors from '../../services/errors/CustomError.js'
 import {
   productExceedsStock,
-  userPremiumTryingToAddOwnProduct,
   generateSingleIdError,
 } from '../../services/errors/info.js'
 import { productModel } from '../models/product.model.js'
@@ -33,11 +32,11 @@ export default class CartRepository {
 
   addProductToCart = async (id, product) => {
     const cart = await this.dao.getCartById(id)
-    //si no tiene el producto lo agrega al carrito
+    //If don't have the product, add it to the cart.
     if (!cart.products.some((p) => p.product.toString() === product)) {
       cart.products.push({ product: product, quantity: 1 })
     } else {
-      // si ya existe el producto aumenta la cantidad del mismo
+      // If the product already exists, increase its quantity
       for (let i = 0; i < cart.products.length; i++) {
         if (cart.products[i].product.toString() === product) {
           cart.products[i].quantity += 1

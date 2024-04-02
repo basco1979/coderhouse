@@ -8,6 +8,7 @@ import { usersService } from '../dao/repositories/index.js'
 
 dotenv.config()
 
+
 export const login = async (req, res) => {
   if (!req.user) {
     res.status(400).send({ message: 'Error with credentials' })
@@ -43,7 +44,7 @@ export const logout = async (req, res) => {
   }
 }
 
-
+//Current user info
 export const currentUser = async (req, res) => {
   res.send({
     first_name: req.user.first_name,
@@ -96,7 +97,6 @@ export const sendEmail = async (req, res) => {
   }
 }
 
-
 export const restorePassword = async (req, res) => {
   const { token, email} = req.query
   const {password} = req.body
@@ -123,6 +123,7 @@ export const restorePassword = async (req, res) => {
   }
 }
 
+//Change user role to premium and the other way round
 export const userToPremium = async (req, res)=> {
   const { uid } = req.params;
   try {

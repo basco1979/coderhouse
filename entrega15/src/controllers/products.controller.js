@@ -1,9 +1,10 @@
 import { productsService } from '../dao/repositories/index.js'
 import { productModel } from '../dao/models/product.model.js'
 import CustomErrors from '../services/errors/CustomError.js'
-import { generateProductErrorInfo, generateSingleIdError, invalidParam } from '../services/errors/info.js'
+import { generateSingleIdError, invalidParam } from '../services/errors/info.js'
 import ErrorEnum from '../services/errors/error.enum.js'
 
+//Get products by filter(limit, page, sort, query)
 export const getProducts = async (req, res) => {
   let listado = []
   let { limit, page, sort, query } = req.query
@@ -146,6 +147,7 @@ export const getProducts = async (req, res) => {
   }
 }
 
+//Get product by id
 export const getProductById = async (req, res) => {
   const pid = req.params.pid
   if(pid.length !==24){
@@ -175,6 +177,7 @@ export const getProductById = async (req, res) => {
   }
 }
 
+//Create new Product
 export const createProduct = async (req, res) => {
   const product = req.body
   product.owner = req.user.email ? req.user.email : "admin"
@@ -198,6 +201,7 @@ export const createProduct = async (req, res) => {
   }
 }
 
+//Update a existing Product
 export const updateProduct = async (req, res) => {
   const productId = req.params.pid
   const product = await productModel.findOne({ _id: productId})
@@ -215,6 +219,7 @@ export const updateProduct = async (req, res) => {
   }
 }
 
+//Delete a Product by Id
 export const deleteProduct = async (req, res) => {
   const productToDelete = req.params.pid
   const product = await productModel.findOne({ _id: req.params.pid})

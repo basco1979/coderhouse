@@ -1,3 +1,5 @@
+// Check if user  is logged in
+// If not, redirect to login page.
 export const checkAuth = (req, res, next) => {
     if(!req.session.user){
         return res.redirect('/login');
@@ -5,6 +7,7 @@ export const checkAuth = (req, res, next) => {
     next();
 } 
 
+// Redirects the user to the homepage if user is already logged in.
 export const checkExistingUser = (req, res, next) => {
     if(req.session.user){
         return res.redirect('/');
@@ -12,6 +15,7 @@ export const checkExistingUser = (req, res, next) => {
     next();
 }
 
+// Middleware for handling roles
 export const applyPolicies = (roles) => {
     return (req, res, next) => {
         if(roles[0].toUpperCase() === 'PUBLIC'){

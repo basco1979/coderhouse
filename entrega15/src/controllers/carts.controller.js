@@ -2,6 +2,7 @@ import { productModel } from '../dao/models/product.model.js'
 import { userModel } from '../dao/models/user.model.js'
 import { cartsService } from '../dao/repositories/index.js'
 
+//Save a new cart to the database
 export const saveCart = async (req, res) => {
   const cart = req.body
   try {
@@ -12,6 +13,7 @@ export const saveCart = async (req, res) => {
   }
 }
 
+//Get a specific cart by its id
 export const getCartById = async (req, res) => {
   const cid = req.params.cid
   const cart = await cartsService.getCartById(cid)
@@ -25,6 +27,7 @@ export const getCartById = async (req, res) => {
   } else res.status(404).send({ error: 'Cart not found' })
 }
 
+//Adds a product to the cart by passing product id and cart id
 export const postProductInCart = async (req, res) => {
 const { pid, cid } = req.params;
   try {
@@ -41,7 +44,7 @@ const { pid, cid } = req.params;
   }
 }
 
-
+//Delets a product in the cart by passing product id and cart id
 export const deleteProductInCart = async (req, res) => {
   const { cid, pid } = req.params
    try {
@@ -65,6 +68,7 @@ export const putCart = async (req, res) => {
   }
 }
 
+//Update product in the cart by passing product id and cart id
 export const putProductInCart = async (req, res) => {
   const { cid, pid } = req.params
   const quantity = req.body.quantity
@@ -77,6 +81,7 @@ export const putProductInCart = async (req, res) => {
   }
 }
 
+//Empty cart
 export const deleteCart = async (req, res) => {
   const { cid } = req.params
   try {
@@ -87,6 +92,7 @@ export const deleteCart = async (req, res) => {
   }
 }
 
+//Finish purchase process
 export const purchaseCart = async (req, res) => {
   let { cid } = req.params
   try {
