@@ -15,6 +15,17 @@ paths:
                   $ref: "#/components/schemas/Product"
         "500":
           description: An error occurred processing the request
+    post:
+      summary: Create a new product
+      tags:
+        - Products
+      requestBody:
+        required: true
+        description: Create a new product
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/createProduct"
   /api/products/{pid}:
     get:
       summary: Gets a single product from its id
@@ -34,6 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: "#components/schemas/Product"
+            
 components:
   schemas:
     Product:
@@ -55,8 +67,8 @@ components:
           type: array
           description: array of product images
         code:
-         type: string
-         description: unique code of product
+          type: string
+          description: unique code of product
         stock:
           type: number
           description: stock of the product
@@ -82,45 +94,43 @@ components:
         owner: "prueba@prueba.com"
   requestBodies:
     createProduct:
-      type: object
-      properties:
-        title:
-      	  type: string
-          description: Title of new product
-        description:
-          type: string
-          description: Description of new product
-        price:
-          type: number
-          description: Price of new product
-        thumbnail:
-          type: array
-          description: Array with images for thumbnail
-        code:
-          type: string
-          description: Unique code of new product
-        stock:
-          type: number
-          description: Stock of new product
-        status:
-          type: boolean
-          description: Status of new product
-        category:
-          type: string
-          description: Category of new product
-        owner:
-          type: string
-          description: email who owns the product
-      example:
-        title: "Notebook"
-        description: "Notebook I9 8GB RAM"
-        price: 1200.9
-        thumbnail: []
-        stock: 3
-        code: "AA68 99UI TT12 9911 7310 12"
-        status: true
-        category: "Computers"
-        owner: "prueba@prueba.com"
-
-
-    
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Title of new product
+              description:
+                type: string
+                description: Description of new product
+              price:
+                type: number
+                description: Price of new product
+              code:
+                type: string
+                description: Unique code of new product
+              stock:
+                type: number
+                description: Stock of new product
+              status:
+                type: boolean
+                description: Status of new product
+              category:
+                type: string
+                description: Category of new product
+              owner:
+                type: string
+                description: email who owns the product
+            example:
+              title: "Notebook"
+              description: "Notebook I9 8GB RAM"
+              price: 1200.9
+              thumbnail: []
+              stock: 3
+              code: "AA68 99UI TT12 9911 7310 12"
+              status: true
+              category: "Computers"
+              owner: "prueba@prueba.com"
