@@ -22,8 +22,8 @@ import compression from 'express-compression';
 import { addLogger } from './utils/logger.js';
 import methodOverride from 'method-override'
 import usersRouter from './routes/user.routes.js';
-
-
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUiExpress from 'swagger-ui-express'
 
 const app = express();
 const program = new Command()
@@ -69,6 +69,21 @@ app.set("view engine", "handlebars");
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
+
+//Swagger
+const swaggerOptions = {
+    definition : {
+        openapi: '3.0.1',
+        info: {
+            title: 'Ecommerce',
+            description: 'API  for Ecommerce application'
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJsdoc(swaggerOptions)
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 
 //Logger

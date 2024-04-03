@@ -1,0 +1,70 @@
+
+{"level":"info","message":"Info message"}
+{"level":"warning","message":"Warning message"}
+{"level":"error","message":"Error message"}
+{"level":"fatal","message":"Fatal message"}
+{"level":"error","message":"13:32:49 - Error to restore password"}
+{"level":"error","message":"18:33:32 - Error to get product"}
+{"level":"error","message":"19:02:13 - Error to create product"}
+{"level":"error","message":"19:02:20 - Error to create product"}
+{"level":"error","message":"19:04:14 - Error to create product"}
+{"kind":"ObjectId","level":"error","message":"Error Cast to ObjectId failed for value \"css\" (type string) at path \"_id\" for model \"products\"","path":"_id","reason":{},"stack":"CastError: Cast to ObjectId failed for value \"css\" (type string) at path \"_id\" for model \"products\"\n    at SchemaObjectId.cast (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\schema\\objectId.js:250:11)\n    at SchemaType.applySetters (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\schemaType.js:1219:12)\n    at SchemaType.castForQuery (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\schemaType.js:1633:15)\n    at cast (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\cast.js:375:32)\n    at Query.cast (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\query.js:4768:12)\n    at Query._castConditions (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\query.js:2200:10)\n    at model.Query._findOne (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\query.js:2484:8)\n    at model.Query.exec (C:\\Users\\Pali\\Desktop\\CoderHouse\\coderhouse\\entrega14\\node_modules\\mongoose\\lib\\query.js:4290:80)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async updateProductPage (file:///C:/Users/Pali/Desktop/CoderHouse/coderhouse/entrega14/src/controllers/views.controller.js:88:19)","stringValue":"\"css\"","value":"css","valueType":"string"}
+{"level":"error","message":"19:12:03 - Error to restore password"}
+{"level":"error","message":"19:13:31 - Error to restore password"}
+{"level":"error","message":"19:14:43 - Error to restore password"}
+{"level":"error","message":"19:14:55 - Error to restore password"}
+{"level":"error","message":"19:15:42 - Error to restore password"}
+{"level":"error","message":"19:15:55 - Error to restore password"}
+{"level":"error","message":"19:17:03 - Error to restore password"}
+{"level":"error","message":"19:26:04 - Error to restore password"}
+{"level":"error","message":"19:27:03 - Error to restore password"}
+{"level":"error","message":"19:27:25 - Error to restore password"}
+{"level":"error","message":"19:28:06 - Error to restore password"}
+{"level":"error","message":"19:28:32 - Error to restore password"}
+{"level":"error","message":"19:28:45 - Error to restore password"}
+{"level":"error","message":"19:29:07 - Error to restore password"}
+{"level":"error","message":"19:30:02 - Error to restore password"}
+{"level":"error","message":"19:33:23 - Error to restore password"}
+{"level":"error","message":"6:14:52 - User not found"}
+{"level":"warning","message":""}
+{"level":"warning","message":""}
+{"level":"error","message":"21:34:34 - Error to create product"}
+{"level":"error","message":"21:35:11 - Error to create product"}
+{"level":"error","message":"21:37:28 - Error to create product"}
+{"level":"error","message":"21:38:07 - Error to create product"}
+{"level":"warning","message":""}
+{"level":"warning","message":""}
+{"level":"error","message":"15:50:38 - Error to add product"}
+{"level":"error","message":"15:51:09 - Error to add product"}
+{"level":"error","message":"15:51:32 - Error to add product"}
+{"level":"error","message":"15:52:09 - Error to add product"}
+{"level":"error","message":"15:53:16 - Error to add product"}
+{"level":"error","message":"15:53:45 - Error to add product"}
+{"level":"error","message":"15:54:33 - Error to add product"}
+{"level":"error","message":"15:58:21 - Error to add product"}
+{"level":"error","message":"16:02:13 - Error to add product"}
+{"level":"error","message":"16:12:59 - Error to add product"}
+{"level":"error","message":"16:13:15 - Error to add product"}
+{"level":"error","message":"16:16:29 - Error to add product"}
+{"level":"error","message":"16:17:45 - Error to add product"}
+{"level":"error","message":"16:19:27 - Error to add product"}
+{"level":"error","message":"16:20:46 - Error to add product"}
+{"level":"error","message":"16:27:23 - Error to add product"}
+{"level":"error","message":"16:28:23 - Error to add product"}
+{"level":"error","message":"16:28:26 - Error to add product"}
+{"level":"error","message":"16:30:08 - Error to add product"}
+{"level":"error","message":"16:32:24 - Error to add product"}
+{"level":"error","message":"16:36:07 - Error to add product"}
+{"level":"error","message":"16:36:11 - Error to add product"}
+{"level":"error","message":"16:36:40 - Error to add product"}
+{"level":"error","message":"16:36:53 - Error to add product"}
+{"level":"error","message":"16:37:50 - Error to add product"}
+{"level":"error","message":"17:43:45 - Error to update user"}
+{"level":"error","message":"17:44:01 - Error to update user"}
+{"level":"error","message":"17:45:29 - Error to update user"}
+{"level":"error","message":"17:45:52 - Error to update user"}
+{"level":"error","message":"17:46:31 - Error to update user"}
+{"level":"error","message":"17:48:15 - Error to update user"}
+{"level":"error","message":"17:50:38 - Error to update user"}
+{"level":"error","message":"17:50:56 - Error to update user"}
+{"level":"error","message":"17:52:56 - Error to update user"}
