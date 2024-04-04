@@ -22,10 +22,7 @@ paths:
       requestBody:
         required: true
         description: Create a new product
-        content:
-          application/json:
-            schema:
-              $ref: "#components/requestBodies/createProduct"
+        $ref: "#components/requestBodies/createProduct"
   /api/products/{pid}:
     get:
       summary: Gets a single product from its id
@@ -94,11 +91,11 @@ components:
         owner: "prueba@prueba.com"
   requestBodies:
     createProduct:
-      required: true
+      type: object
       content:
         application/json:
           schema:
-            type: object
+            $ref: "#/components/schemas/createProduct"
             properties:
               title:
                 type: string
