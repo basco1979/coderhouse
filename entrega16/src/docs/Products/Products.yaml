@@ -42,7 +42,41 @@ paths:
             application/json:
               schema:
                 $ref: "#components/schemas/Product"
-            
+    put:
+      summary: Update product by id
+      tags: 
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: product id to update
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+    delete:
+      summary: Delete product by id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id to delete a product
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BAD REQUEST
+        '404':
+          description: NOT FOUND
 components:
   schemas:
     Product:
@@ -131,3 +165,40 @@ components:
               status: true
               category: "Computers"
               owner: "prueba@prueba.com"
+    updateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of new product
+        description:
+          type: string
+          description: Description of new product
+        price:
+          type: number
+          description: Price of new product
+        code:
+          type: string
+          description: Unique code of new product
+        stock:
+          type: number
+          description: Stock of new product
+        status:
+          type: boolean
+          description: Status of new product
+        category:
+          type: string
+          description: Category of new product
+        owner:
+          type: string
+          description: email who owns the product
+      example:
+        title: "Notebook"
+        description: "Notebook I9 8GB RAM"
+        price: 1200.9
+        thumbnail: []
+        stock: 3
+        code: "AA68 99UI TT12 9911 7310 12"
+        status: true
+        category: "Computers"
+        owner: "prueba@prueba.com"
