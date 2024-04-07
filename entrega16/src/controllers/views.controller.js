@@ -44,13 +44,17 @@ export const getProductsPage = async (req, res) => {
 export const getCartDetailPage = async (req, res) => {
   const { cid } = req.params;
   const cart = await cartsService.getCartById(cid)
-  //let subtotal = cart.products.forEach(item => Number(item.quantity) * Number(item.product.price))
-  //console.log(subtotal)
+  let subtotal = 0
+  cart.products.forEach(item =>{
+  let result = item.quantity * item.product.price
+  subtotal += result
+  })
+  let total = subtotal.toFixed(2)
   if (cart) {
     if (cart.products.length < 1) {
       res.send({ message: "Empty Cart" });
     } else {
-      res.render("cart", { cart });
+      res.render("cart", { cart, total });
     }
   } else res.status(404).send({ error: "Cart not found" });
 };

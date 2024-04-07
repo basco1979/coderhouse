@@ -16,7 +16,7 @@ import {
   sendEmail
 
 } from "../controllers/views.controller.js";
-import { postProductInCart } from "../controllers/carts.controller.js";
+import { postProductInCart, deleteCart, deleteProductInCart } from "../controllers/carts.controller.js";
 
 const viewsRouter = Router();
 viewsRouter.get("/", checkAuth, getIndexPage);
@@ -30,6 +30,8 @@ viewsRouter.get("/chat", applyPolicies(['USER', 'PREMIUM']), getChatPage);
 viewsRouter.get("/products", applyPolicies(['ADMIN', 'USER', 'PREMIUM']), getProductsPage);
 
 viewsRouter.get("/:cid/add/:pid",  applyPolicies(['USER', 'PREMIUM']), postProductInCart);
+
+viewsRouter.get("/:cid/delete/:pid",  applyPolicies(['USER', 'PREMIUM']), deleteProductInCart);
 
 viewsRouter.get("/cart/:cid", applyPolicies(['USER', 'PREMIUM']), getCartDetailPage);
 
