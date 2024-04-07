@@ -1,5 +1,6 @@
 import CartDTO from '../../dtos/cart.dto.js'
 import CustomErrors from '../../services/errors/CustomError.js'
+import ErrorEnum from '../../services/errors/error.enum.js'
 import {
   productExceedsStock,
   generateSingleIdError,
@@ -33,12 +34,12 @@ export default class CartRepository {
   addProductToCart = async (id, product) => {
     const cart = await this.dao.getCartById(id)
     //If don't have the product, add it to the cart.
-    if (!cart.products.some((p) => p.product.toString() === product)) {
+    if (!cart.products.some((p) => p.product._id.toString() === product)) {
       cart.products.push({ product: product, quantity: 1 })
     } else {
       // If the product already exists, increase its quantity
       for (let i = 0; i < cart.products.length; i++) {
-        if (cart.products[i].product.toString() === product) {
+        if (cart.products[i].product._id.toString() === product) {
           cart.products[i].quantity += 1
         }
       }
@@ -48,19 +49,15 @@ export default class CartRepository {
 
   deleteProductInCart = async (id, productId) => {
     const cart = await this.dao.getCartById(id)
-    let index = cart.products.find((item) => item.id === productId)
+    let index = cart.products.find((item) => item.product._id.toString() === productId.toString())
     if (!index) {
-      CustomErrors.createError({
-        name: 'error to delete product',
-        cause: generateSingleIdError(id),
-        message: 'product does not exists in cart',
-        code: ErrorEnum.ID_NOT_FOUND,
-      })
+      return false
     }
     if (index) {
       cart.products.pull(index)
     }
-    await this.dao.updateCart(id, cart)
+    const productDeleted = await this.dao.updateCart(id, cart)
+    return productDeleted
   }
 
   updateCart = async (id, cart) => {
@@ -72,17 +69,13 @@ export default class CartRepository {
     const cart = await this.dao.getCartById(idCart)
     let index
     for (let i = 0; i < cart.products.length; i++) {
-      if (cart.products[i].id === idProduct) {
+      if (cart.products[i].product._id.toString() === idProduct) {
         index = i
-      } else {
-        CustomErrors.createError({
-          name: 'product error',
-          cause: generateSingleIdError(id),
-          message: 'product does not exists in cart',
-          code: ErrorEnum.ID_NOT_FOUND,
-        })
       }
-    }
+      if (cart.products[i].product._id.toString() !== idProduct) {
+          return false
+       }
+      }
     cart.products[index].quantity = quantity
     await this.dao.updateCart(idCart, cart)
   }
@@ -97,17 +90,11 @@ export default class CartRepository {
     const cart = await this.dao.getCartById(id)
     let newCart = []
     let ticket = {}
-    for (let i = 0; i < cart.products.length; i++) {
+    for (let i =0; i < cart.products.length; i++) {
       const product = await productModel.findOne({
         _id: cart.products[i].product,
       })
       if (cart.products[i].quantity > product.stock) {
-        CustomErrors.createError({
-          name: 'quantity error',
-          cause: productExceedsStock(),
-          message: 'product exceeds stock',
-          code: ErrorEnum.EXCEEDS_STOCK,
-        })
         newCart = cart.products[i]
       }
       if (cart.products[i].quantity <= product.stock) {
@@ -122,7 +109,7 @@ export default class CartRepository {
         ticket.purchaser = user.email
       }
     }
-    await this.dao.updateCart(id, { products: newCart })
+    const updatedCart = await this.dao.updateCart(id, { products: newCart })
     const ticketGenerated = await ticketModel.create(ticket)
     return ticketGenerated
   }

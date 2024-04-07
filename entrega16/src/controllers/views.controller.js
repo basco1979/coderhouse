@@ -92,7 +92,7 @@ export const updateProductPage = async (req, res) => {
   res.render("update-product", product);
   }
   catch(err){
-    req.logger.error("Error", err)
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - "Error" `, err)
   }
 };
 

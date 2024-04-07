@@ -23,7 +23,7 @@ export const createTicket = async (req, res) => {
     const result = await ticketsService.createTicket(ticket)
     res.send(result)
   } catch (err) {
-    req.logger.error(`${new Date().toLocaleTimeString()} -Error to create ticket` + err)
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} -Error to create ticket` + err)
     res.status(500).send('ticket error')
   }
 }

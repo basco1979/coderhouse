@@ -68,3 +68,66 @@
 {"level":"error","message":"17:50:38 - Error to update user"}
 {"level":"error","message":"17:50:56 - Error to update user"}
 {"level":"error","message":"17:52:56 - Error to update user"}
+{"level":"error","message":"20:31:54 - Error to add product"}
+{"level":"error","message":"20:48:06 - Error to update product"}
+{"level":"error","message":"20:49:10 - Error to update product"}
+{"level":"error","message":"20:53:18 - Error to update product"}
+{"level":"error","message":"20:53:52 - Error to update product"}
+{"level":"error","message":"20:54:57 - Error to update product"}
+{"level":"error","message":"20:55:48 - Error to update product"}
+{"level":"error","message":"20:56:03 - Error to update product"}
+{"level":"error","message":"20:56:40 - Error to update product"}
+{"level":"error","message":"20:57:42 - Error to update product"}
+{"level":"error","message":"20:58:13 - Error to update product"}
+{"level":"error","message":"20:58:42 - Error to update product"}
+{"level":"error","message":"20:59:05 - Error to update product"}
+{"level":"error","message":"21:00:49 - Error to update product"}
+{"level":"error","message":"21:02:03 - Error to update product"}
+{"level":"error","message":"21:03:17 - Error to update product"}
+{"level":"info","message":"21:04:56 - Cart Updated"}
+{"level":"info","message":"21:05:47 - Cart Updated"}
+{"level":"info","message":"21:05:53 - Cart Updated"}
+{"level":"info","message":"21:07:17 - Cart Updated"}
+{"level":"error","message":"21:08:01 - Error to update product"}
+{"level":"error","message":"21:08:35 - Error to update product"}
+{"level":"error","message":"21:08:59 - Error to update product"}
+{"level":"error","message":"21:09:26 - Error to update product"}
+{"level":"error","message":"21:11:03 - Error to update product"}
+{"level":"error","message":"21:12:40 - Error to update product"}
+{"level":"error","message":"21:13:14 - Error to update product"}
+{"level":"error","message":"10:47:19 - Error to update product"}
+{"level":"error","message":"10:48:24 - Error to update product"}
+{"level":"error","message":"10:49:30 - Error to update product"}
+{"level":"error","message":"10:51:31 - Error to update product"}
+{"level":"error","message":"10:51:43 - Error to update product"}
+{"level":"error","message":"10:52:53 - Error to update product"}
+{"level":"error","message":"10:54:04 - Error to update product"}
+{"level":"error","message":"10:54:31 - Error to update product"}
+{"level":"error","message":"10:54:50 - Error to update product"}
+{"level":"error","message":"10:55:25 - Error to update product"}
+{"level":"error","message":"10:55:59 - Error to update product"}
+{"level":"error","message":"10:56:56 - Error to update product"}
+{"level":"error","message":"10:57:18 - Error to update product"}
+{"level":"error","message":"10:59:12 - Error to update product"}
+{"level":"info","message":"11:00:11 - Cart Updated"}
+{"level":"info","message":"11:00:46 - Cart Updated"}
+{"level":"error","message":"11:02:14 - Error to update product"}
+{"level":"error","message":"11:03:08 - Error to update product"}
+{"level":"info","message":"7/4/2024 - Product Id not found in this cart"}
+{"level":"info","message":"7/4/2024 - 11:07:56 - Product Id not found in this cart"}
+{"level":"error","message":"7/4/2024 - 11:18:41 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:29:08 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:29:39 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:29:58 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:30:22 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:30:47 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:31:29 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:31:56 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:37:36 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:42:06 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:50:22 - Error to delete product"}
+{"level":"error","message":"7/4/2024 - 11:52:45 - Error to delete product"}
+{"level":"info","message":"7/4/2024 - 11:53:14 - Empty Cart"}
+{"level":"error","message":"7/4/2024 - 11:55:47 - Error to delete product"}
+{"level":"info","message":"7/4/2024 - 11:56:45 - Empty Cart"}
+{"level":"error","message":"7/4/2024 - 12:07:41 - Error to make the purchase"}

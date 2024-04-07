@@ -157,7 +157,7 @@ export const getProductById = async (req, res) => {
           message: 'Id must be a 24 character length',
           code: ErrorEnum.INVALID_PARAM,
     })
-    req.logger.error(`${new Date().toLocaleTimeString()} - Id must be a 24 character length`)
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id must be a 24 character length`)
   }
   try {
     const product = await productsService.getProductById(pid)
@@ -169,11 +169,11 @@ export const getProductById = async (req, res) => {
           message: 'Id does not exists',
           code: ErrorEnum.ID_NOT_FOUND,
         })
-        req.logger.error(`${new Date().toLocaleTimeString()} - Id does not exists`)    
+        req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id does not exists`)    
     }
   
   } catch (error) {
-    req.logger.error(`${new Date().toLocaleTimeString()} - Error to get product`)  
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to get product`)  
   }
 }
 
@@ -197,7 +197,7 @@ export const createProduct = async (req, res) => {
       message: 'Error trying to create product',
       code: ErrorEnum.INVALID_TYPE_ERROR,
     }) */
-    req.logger.error(`${new Date().toLocaleTimeString()} - Error to create product`)  
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product`)  
   }
 }
 
@@ -215,7 +215,7 @@ export const updateProduct = async (req, res) => {
       res.send({message: "Unauthorized to update this product"})
     }
   } catch (err) {
-    req.logger.error(`${new Date().toLocaleTimeString()} - Error to update product`)  
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to update product`)  
   }
 }
 
@@ -233,6 +233,6 @@ export const deleteProduct = async (req, res) => {
       res.send({message: "Unauthorized to update this product"})
     }
   } catch (err) {
-    req.logger.error(`${new Date().toLocaleTimeString()} - Error to delete product`)  
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to delete product`)  
   }
 }

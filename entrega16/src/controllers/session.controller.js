@@ -33,13 +33,13 @@ export const logout = async (req, res) => {
   try {
     req.session.destroy((err) => {
       if (err) {
-        req.logger.error(`${new Date().toLocaleTimeString()} - Error to logout`)  
+        req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to logout`)  
         return res.status(500).json({ message: 'Logout failed' })
       }
     })
     res.send({ redirect: 'http://localhost:8080/login' })
   } catch (error) {
-        req.logger.error(`${new Date().toLocaleTimeString()} - Error to logout`)  
+        req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to logout`)  
     res.status(400).send({ error })
   }
 }
@@ -103,7 +103,7 @@ export const restorePassword = async (req, res) => {
   try {
     const user = await userModel.findOne({ email })
     if (!user) {
-      req.logger.error(`${new Date().toLocaleTimeString()} - User not found`)  
+      req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - User not found`)  
       return res.status(401).send({ message: 'User not found' })
     }
     if(!token){
@@ -118,7 +118,7 @@ export const restorePassword = async (req, res) => {
       return res.send({message: 'The new password is equal to the old one.'})
     }
   } catch (error) {
-    req.logger.error(`${new Date().toLocaleTimeString()} - Error to restore password`)  
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to restore password`)  
     res.status(400).send({ error })
   }
 }
@@ -132,6 +132,6 @@ export const userToPremium = async (req, res)=> {
     const result = await usersService.updateUser(uid, user)
     res.send({message : `User role updated to ${user.role} `})
   } catch (error) {
-    req.logger.error(`${new Date().toLocaleTimeString()} - Error to update user`)  
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to update user`)  
   }
 }
