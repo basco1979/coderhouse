@@ -194,7 +194,7 @@ export const createProduct = async (req, res) => {
     }
     else{
     req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product - Code exists`)
-    return res.status(500).json({message:"This product code already exist."})
+    return res.status(400).json({message:"This product code already exist."})
     }
   } catch (err) {
     req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product`)  
