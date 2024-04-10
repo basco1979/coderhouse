@@ -13,6 +13,12 @@ export default class Products {
       return result
   }
 
+  
+  getProductByCode = async (code) => {
+      const result = await productModel.findOne({ code: code })
+      return result
+  }
+
   saveProduct = async (product) => {
       const result = await productModel.create(product)
       return true

@@ -131,3 +131,13 @@
 {"level":"error","message":"7/4/2024 - 11:55:47 - Error to delete product"}
 {"level":"info","message":"7/4/2024 - 11:56:45 - Empty Cart"}
 {"level":"error","message":"7/4/2024 - 12:07:41 - Error to make the purchase"}
+{"level":"error","message":"10/4/2024 - 9:01:04 - Error to add cart"}
+{"level":"error","message":"10/4/2024 - 9:05:21 - Error to add product"}
+{"level":"error","message":"10/4/2024 - 9:08:00 - Error to add product"}
+{"level":"info","message":"10/4/2024 - 9:24:10 - Product Id not found in this cart"}
+{"level":"error","message":"10/4/2024 - 9:43:03 - Error to create product"}
+{"level":"error","message":"10/4/2024 - 9:43:36 - Error to create product"}
+{"level":"error","message":"10/4/2024 - 9:44:01 - Error to create product"}
+{"level":"error","message":"10/4/2024 - 9:51:36 - Error to create product - Code exists"}
+{"level":"error","message":"10/4/2024 - 9:53:10 - Error to create product - Code exists"}
+{"level":"error","message":"10/4/2024 - 9:55:12 - Error to create product - Code exists"}

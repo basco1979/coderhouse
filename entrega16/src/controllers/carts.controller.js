@@ -6,7 +6,7 @@ import { cartsService } from '../dao/repositories/index.js'
 export const saveCart = async (req, res) => {
   const cart = req.body
   try {
-    const result = await cartsService.saveCart(cart)
+    const result = await cartsService.createCart(cart)
     res.send(result)
   } catch (err) {
     req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to add cart`)

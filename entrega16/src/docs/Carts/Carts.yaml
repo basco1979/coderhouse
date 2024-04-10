@@ -27,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: "#components/schemas/Cart"
+        "404": 
+          description: NOT FOUND Error. Cart with given ID not found.
     put:
       summary: Update cart by id
       tags: 
@@ -44,6 +46,15 @@ paths:
           application/json:
             schema:
               $ref: "#components/requestBodies/updateCart"
+      responses:
+        "200":
+          description: The requested cart was updated 
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Cart"
+        "404": 
+          description: NOT FOUND Error. Cart with given ID not found.
     delete:
       summary: Empty cart by id
       tags:
@@ -57,9 +68,7 @@ paths:
             $type: String
       responses:
         '200':
-          description: OK
-        '400':
-          description: BAD REQUEST
+          description: empty cart
         '404':
           description: NOT FOUND
   /api/carts/{cid}/product/{pid}:
@@ -80,6 +89,11 @@ paths:
         description: product id to add to the cart
         schema:
           $type: String
+      responses:
+        "200":
+          description: The requested product was added to the cart 
+        "404": 
+          description: NOT FOUND Error.
     put:
       summary: Update quantity of a specific product in the cart
       tags: 
@@ -103,6 +117,15 @@ paths:
           application/json:
             schema:
               $ref: "#components/requestBodies/updateProductInCart"
+      responses:
+        "200":
+          description: product quantity updated 
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Cart"
+        "404": 
+          description: NOT FOUND Error.
     delete:
       summary: Delete an specific product in the cart
       tags: 
@@ -120,6 +143,11 @@ paths:
         description: product id to delete in the cart
         schema:
           $type: String
+      responses:
+        "200":
+          description: The requested product was deleted in the cart 
+        "404": 
+          description: NOT FOUND Error. Cart with given ID not found.
   /api/carts/{cid}/purchase:
     put:
       summary: Update cart after purchase, leaving only products out of stock 
@@ -132,6 +160,11 @@ paths:
         description: cart id to update
         schema:
           $type: String
+      responses:
+        "200":
+          description: The requested cart was updated after the purchase
+        "404": 
+          description: NOT FOUND Error. Cart with given ID not found.
 components:
   schemas:
     Cart:

@@ -181,8 +181,9 @@ export const getProductById = async (req, res) => {
 export const createProduct = async (req, res) => {
   const product = req.body
   product.owner = req.user.email ? req.user.email : "admin"
-  console.log(product)
   try {
+    const productCode = await productsService.getProductByCode(product.code)
+    if(!productCode){
     const result = await productsService.createProduct(product)
     if(product.owner ===  "admin"){
     return res.redirect('/api/session/admin')
@@ -190,14 +191,14 @@ export const createProduct = async (req, res) => {
     else{
       return res.redirect('/products')
     }
+    }
+    else{
+    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product - Code exists`)
+    return res.status(500).json({message:"This product code already exist."})
+    }
   } catch (err) {
-/*     CustomErrors.createError({
-      name: 'product creation failed',
-      cause: generateProductErrorInfo(product),
-      message: 'Error trying to create product',
-      code: ErrorEnum.INVALID_TYPE_ERROR,
-    }) */
     req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product`)  
+    return res.status(500).json({message:"Internal server error."})
   }
 }
 

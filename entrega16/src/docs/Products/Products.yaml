@@ -42,6 +42,7 @@ paths:
             application/json:
               schema:
                 $ref: "#components/schemas/Product"
+        "404" : Id not found
     put:
       summary: Update product by id
       tags: 
@@ -59,6 +60,14 @@ paths:
           application/json:
             schema:
               $ref: "#components/requestBodies/updateProduct"
+            responses:
+        "200":
+          description: The requested product was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Product"
+        "404" : Id not found
     delete:
       summary: Delete product by id
       tags:
@@ -72,11 +81,9 @@ paths:
             $type: String
       responses:
         '200':
-          description: OK
-        '400':
-          description: BAD REQUEST
+          description: the requested product has been deleted
         '404':
-          description: NOT FOUND
+          description: Id not found
 components:
   schemas:
     Product:

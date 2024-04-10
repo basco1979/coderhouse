@@ -19,6 +19,15 @@ export default class ProductRepository {
     }
   }
 
+  getProductByCode = async (code) => {
+    const product = await this.dao.getProductByCode(code) 
+    if (product) {
+      return product
+    } else {
+      console.log('Id does not exists')
+    }
+  }
+
   createProduct = async (product) => {
     const newProduct = new ProductDTO(product);
     const result = this.dao.saveProduct(newProduct)

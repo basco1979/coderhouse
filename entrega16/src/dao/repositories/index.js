@@ -3,7 +3,7 @@ import Users from "../factory/userFactory.js";
 import Products from "../factory/productFactory.js";
 import Messages from "../factory/messageFactory.js";
 import Carts from "../factory/cartFactory.js";
-import Tickets from "../factory/ticketFactory.js"
+import Tickets from "../factory/ticketFactory.js"   
 
 import UserRepository from "./users.repository.js";
 import ProductRepository from "./products.repository.js";
