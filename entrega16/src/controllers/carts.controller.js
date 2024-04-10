@@ -110,3 +110,32 @@ export const purchaseCart = async (req, res) => {
     req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to make the purchase`)
   }
 }
+
+
+export const increaseQuantityProductInCart = async (req, res) => {
+  const { cid, pid } = req.params
+  const cart = await cartsService.getCartById(cid)
+  let quantityToUpdate = 0
+  cart.products.forEach(item =>{
+  if(item.product._id.toString() === pid) {
+    quantityToUpdate = item.quantity
+  }
+  })
+    const cartUpdated = await cartsService.putProductInCart(cid, pid, ++quantityToUpdate)
+  res.redirect(`/cart/${cid}`)
+}
+
+export const decreaseQuantityProductInCart = async (req, res) => {
+  const { cid, pid } = req.params
+  const cart = await cartsService.getCartById(cid)
+  let quantityToUpdate = 0
+  cart.products.forEach(item =>{
+  if(item.product._id.toString() === pid) {
+    quantityToUpdate = item.quantity
+  }
+  })
+  if (quantityToUpdate > 0){
+    const cartUpdated = await cartsService.putProductInCart(cid, pid, --quantityToUpdate)
+  }
+  res.redirect(`/cart/${cid}`)
+}

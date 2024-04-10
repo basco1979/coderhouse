@@ -72,8 +72,8 @@ export default class CartRepository {
       if (cart.products[i].product._id.toString() === idProduct) {
         index = i
       }
-      if (cart.products[i].product._id.toString() !== idProduct) {
-          return false
+      if(cart.products[i].product._id.toString() !== idProduct) {
+          continue
        }
       }
     cart.products[index].quantity = quantity

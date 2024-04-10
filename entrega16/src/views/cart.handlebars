@@ -13,7 +13,10 @@
         <td class='title'>{{this.product.title}} </td>
         <td> {{this.quantity}} </td>
         <td> $ {{this.product.price}} </td>
-        <td> <button>+</button><span>  </span><button>-</button></td>
+        <td style="text-align: center;">
+          <a href="/{{../cart._id}}/addQuantity/{{this.product._id}}" style="text-decoration: none;" > + </a>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <a href="/{{../cart._id}}/removeQuantity/{{this.product._id}}" style="text-decoration: none;"> - </a></td>
         <td><a href="/{{../cart._id}}/delete/{{this.product._id}}??_method=DELETE">X</a></td>
       </tr>
     {{/each}}
