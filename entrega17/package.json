@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/app.js --persistence MONGO",
-    "test": "mocha src/test/Session.test.js"
+    "test": "mocha src/test/Ecommerce.test.js"
   },
   "type": "module",
   "keywords": [],

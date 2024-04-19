@@ -12,6 +12,7 @@ export const login = async (req, res) => {
   if (!req.user) {
     res.status(400).send({ message: 'Error with credentials' })
   }
+  
   req.session.user = {
     //el req.user viene de la serializacion hecha con passport
     first_name: req.user.first_name,

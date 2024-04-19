@@ -44,6 +44,10 @@ export const getProducts = async (req, res) => {
         limit: limit ? limit : 10,
         page: page ? page : 1,
         sort: sort ? sort : null,
+        collation: {   // <--- setup the sorting options via the collation flags
+          locale: 'en',
+          strength: 1
+        }
       })
       return res.json({
         status: 'success',
@@ -189,7 +193,7 @@ export const createProduct = async (req, res) => {
     return res.redirect('/api/session/admin')
     }
     else{
-      return res.redirect('/products')
+      return res.send({status:"success",payload:result})
     }
     }
     else{
@@ -198,7 +202,7 @@ export const createProduct = async (req, res) => {
     }
   } catch (err) {
     req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product`)  
-    return res.status(500).json({message:"Internal server error."})
+    return res.status(400).json({message:"Error to create product."})
   }
 }
 

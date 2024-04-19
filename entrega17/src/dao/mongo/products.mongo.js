@@ -21,8 +21,7 @@ export default class Products {
 
   saveProduct = async (product) => {
       const result = await productModel.create(product)
-      return true
-    
+      return result
   }
 
   updateProduct = async (id, product) => {

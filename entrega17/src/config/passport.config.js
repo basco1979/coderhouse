@@ -25,7 +25,7 @@ const initializePassport = () => {
           products: [],
         }
         const result = await cartModel.create(cart)
-        const { first_name, last_name, email, age } = req.body
+        const { first_name, last_name, email, age, role } = req.body
         try {
           const user = await userModel.findOne({ email: username })
           if (user) return done(null, false, 'Email already in use')
@@ -35,6 +35,7 @@ const initializePassport = () => {
             email,
             age,
             password: createHash(password),
+            role,
             cartId: result._id,
           })
           return done(null, newUser)
