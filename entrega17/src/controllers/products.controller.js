@@ -167,13 +167,8 @@ export const getProductById = async (req, res) => {
     const product = await productsService.getProductById(pid)
     if (product) res.send(product)
     else {
-   CustomErrors.createError({
-          name: 'find product failed',
-          cause: generateSingleIdError(id),
-          message: 'Id does not exists',
-          code: ErrorEnum.ID_NOT_FOUND,
-        })
-        req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id does not exists`)    
+        req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id does not exists`)
+        res.send({message: "Id does not exists"})    
     }
   
   } catch (error) {
@@ -184,7 +179,7 @@ export const getProductById = async (req, res) => {
 //Create new Product
 export const createProduct = async (req, res) => {
   const product = req.body
-  product.owner = req.user.email ? req.user.email : "admin"
+  product.owner = product.owner ? product.owner : req.user.email || "admin"
   try {
     const productCode = await productsService.getProductByCode(product.code)
     if(!productCode){

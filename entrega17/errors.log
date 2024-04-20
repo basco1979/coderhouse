@@ -200,3 +200,29 @@
 {"level":"error","message":"18/4/2024 - 22:40:23 - Error to add product"}
 {"level":"error","message":"18/4/2024 - 22:48:25 - Error to create product"}
 {"level":"error","message":"18/4/2024 - 22:48:26 - Error to add product"}
+{"level":"error","message":"19/4/2024 - 6:39:45 - Error to create product"}
+{"level":"error","message":"19/4/2024 - 6:39:46 - Error to add product"}
+{"level":"error","message":"19/4/2024 - 6:40:30 - Error to create product - Code exists"}
+{"level":"error","message":"19/4/2024 - 6:40:31 - Error to create product - Code exists"}
+{"level":"error","message":"19/4/2024 - 6:40:32 - Error to create product - Code exists"}
+{"level":"error","message":"19/4/2024 - 6:41:05 - Error to create product - Code exists"}
+{"level":"error","message":"19/4/2024 - 6:41:06 - Error to create product - Code exists"}
+{"level":"error","message":"19/4/2024 - 6:41:07 - Error to create product - Code exists"}
+{"level":"error","message":"19/4/2024 - 6:42:11 - Error to create product"}
+{"level":"error","message":"19/4/2024 - 6:42:12 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:02:17 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:15:39 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:16:19 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:16:46 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:18:02 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:18:35 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:23:20 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:23:58 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:28:07 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:36:49 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:37:30 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:49:43 - Error to add product"}
+{"level":"error","message":"20/4/2024 - 10:50:24 - Error to create product - Code exists"}
+{"level":"error","message":"20/4/2024 - 10:53:40 - Error to get product"}
+{"level":"error","message":"20/4/2024 - 10:54:50 - Id does not exists"}
+{"level":"info","message":"20/4/2024 - 11:01:50 - Empty Cart"}

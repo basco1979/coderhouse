@@ -1,6 +1,5 @@
 import chai from 'chai'
 import supertest from 'supertest'
-import { userModel } from '../dao/models/user.model.js'
 
 const expect = chai.expect
 const requester = supertest.agent('http://localhost:8080')
@@ -37,18 +36,18 @@ describe('Testing Ecommerce', () => {
       expect(statusCode).to.equal(302)
     })
 
-    it('Debe loguear correctamente al usuario', async () => {
-      const mockUser = {
-        email: 'elmercaderoso@gmail.com',
-        password: '123456',
-      }
-      await requester
-        .post('/api/session/login')
-        .send(mockUser)
-        .expect(302)
-        .expect('Location', '/')
-    })
-
+  it('Debe loguear correctamente al usuario', async () => {
+    const mockUser = {
+      email: 'elmercaderoso@gmail.com',
+      password: '123456',
+    }
+    await requester
+      .post('/api/session/login')
+      .send(mockUser)
+      .expect(302)
+      .expect('Location', '/')
+  })
+  
     it('Debe enviar la info de la session que contiene el usuario y desestructurarla correctamente', async () => {
       const { _body } = await requester.get('/api/session/current')
       expect(_body.first_name).to.be.equal('Elmerindio')
@@ -98,8 +97,8 @@ describe('Testing Ecommerce', () => {
         expect(_body.payload).to.be.an('array')
         expect(statusCode).to.be.eql(200)
     })
-  })
-  describe('Testing Cart',  () =>{
+  }) 
+  describe('Testing Cart', () => {
     it('Agregamos un producto en un carrito', async()=> {
         const productMock = {
         title: 'Mock Product 2',
@@ -113,8 +112,22 @@ describe('Testing Ecommerce', () => {
       }
 
       const { _body } = await requester.post('/api/products').send(productMock)
-      const {  } = await requester.get('/api/session/current')      
-      await requester.post(`/api/carts/${cartId}/product/${_body.payload._id}`)
+      const current = await requester.get('/api/session/current')     
+      const {statusCode} = await requester.post(`/api/carts/${current._body.cartId}/product/${_body.payload._id}`)
+      expect(statusCode).to.be.equal(302)  
+    })
+    it('Comprobamos que el carrito tiene el producto agregado', async function () {
+      const current = await requester.get('/api/session/current')
+      const cart = await requester.get(`/api/carts/${current._body.cartId}`)
+      expect(cart._body.cart.products[0].product.title).to.equal(
+        'Mock Product 2'
+      )
+    })
+    it("Se elimina un producto del carrito", async function(){
+        const current = await requester.get('/api/session/current')
+        const cart = await requester.get(`/api/carts/${current._body.cartId}`)
+        let response = await requester.delete(`/api/carts/${current._body.cartId}/product/${cart._body.cart.products[0].product._id}`)
+        expect(response.status).to.be.equal(200)
     })
   })
 })
