@@ -36,7 +36,8 @@ const userSchema = mongoose.Schema({
         type: [
             {
                 name: String,
-                reference : String
+                reference : String,
+                doctype: String
             }
         ],
         default: []

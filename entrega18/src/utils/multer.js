@@ -12,14 +12,14 @@ const storage = multer.diskStorage({
       cb(null, __dirname + '/public/user-documents/accountstatement')
     } else if (file.fieldname === 'address') {
       cb(null, __dirname + '/public/user-documents/address')
-    } else {
-    console.log(file.fieldname)
-      cb(null, __dirname + '/public/user-documents/others')
-    }
+    } 
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + ` - ${req.user.email}`)
   },
 })
 
-export const uploader = multer({ storage })
+export const uploadProfile = multer({ storage }).single('profile')
+export const uploadProduct = multer({ storage }).single('product')
+export const uploadAccountStatement = multer({ storage }).single('accountstatement')
+export const uploadAddres = multer({ storage }).single('address')
