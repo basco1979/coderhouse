@@ -1,8 +1,9 @@
-import { productsService } from '../dao/repositories/index.js'
+import { productsService, usersService } from '../dao/repositories/index.js'
 import { productModel } from '../dao/models/product.model.js'
 import CustomErrors from '../services/errors/CustomError.js'
 import { generateSingleIdError, invalidParam } from '../services/errors/info.js'
 import ErrorEnum from '../services/errors/error.enum.js'
+import nodemailer from 'nodemailer'
 
 //Get products by filter(limit, page, sort, query)
 export const getProducts = async (req, res) => {
@@ -44,10 +45,11 @@ export const getProducts = async (req, res) => {
         limit: limit ? limit : 10,
         page: page ? page : 1,
         sort: sort ? sort : null,
-        collation: {   // <--- setup the sorting options via the collation flags
+        collation: {
+          // <--- setup the sorting options via the collation flags
           locale: 'en',
-          strength: 1
-        }
+          strength: 1,
+        },
       })
       return res.json({
         status: 'success',
@@ -154,85 +156,125 @@ export const getProducts = async (req, res) => {
 //Get product by id
 export const getProductById = async (req, res) => {
   const pid = req.params.pid
-  if(pid.length !==24){
+  if (pid.length !== 24) {
     CustomErrors.createError({
       name: 'invalid param',
-          cause: invalidParam(pid),
-          message: 'Id must be a 24 character length',
-          code: ErrorEnum.INVALID_PARAM,
+      cause: invalidParam(pid),
+      message: 'Id must be a 24 character length',
+      code: ErrorEnum.INVALID_PARAM,
     })
-    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id must be a 24 character length`)
+    req.logger.error(
+      `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id must be a 24 character length`
+    )
   }
   try {
     const product = await productsService.getProductById(pid)
     if (product) res.send(product)
     else {
-        req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id does not exists`)
-        res.send({message: "Id does not exists"})    
+      req.logger.error(
+        `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Id does not exists`
+      )
+      res.send({ message: 'Id does not exists' })
     }
-  
   } catch (error) {
-    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to get product`)  
+    req.logger.error(
+      `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to get product`
+    )
   }
 }
 
 //Create new Product
 export const createProduct = async (req, res) => {
   const product = req.body
-  product.owner = product.owner ? product.owner : req.user.email || "admin"
+  product.owner = product.owner ? product.owner : req.user.email || 'admin'
   try {
     const productCode = await productsService.getProductByCode(product.code)
-    if(!productCode){
-    const result = await productsService.createProduct(product)
-    if(product.owner ===  "admin"){
-    return res.redirect('/api/session/admin')
-    }
-    else{
-      return res.send({status:"success",payload:result})
-    }
-    }
-    else{
-    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product - Code exists`)
-    return res.status(400).json({message:"This product code already exist."})
+    if (!productCode) {
+      const result = await productsService.createProduct(product)
+      if (product.owner === 'admin') {
+        return res.redirect('/api/session/admin')
+      } else {
+        return res.send({ status: 'success', payload: result })
+      }
+    } else {
+      req.logger.error(
+        `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product - Code exists`
+      )
+      return res
+        .status(400)
+        .json({ message: 'This product code already exist.' })
     }
   } catch (err) {
-    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product`)  
-    return res.status(400).json({message:"Error to create product."})
+    req.logger.error(
+      `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to create product`
+    )
+    return res.status(400).json({ message: 'Error to create product.' })
   }
 }
 
 //Update a existing Product
 export const updateProduct = async (req, res) => {
   const productId = req.params.pid
-  const product = await productModel.findOne({ _id: productId})
+  const product = await productModel.findOne({ _id: productId })
   const newProduct = req.body
   try {
-   if(req.user.role === 'admin' || product.owner === req.user.email){
-    const result = await productsService.updateProduct(productId, newProduct)
-    res.send(result)
-    }
-    else{
-      res.send({message: "Unauthorized to update this product"})
+    if (req.user.role === 'admin' || product.owner === req.user.email) {
+      const result = await productsService.updateProduct(productId, newProduct)
+      res.send(result)
+    } else {
+      res.send({ message: 'Unauthorized to update this product' })
     }
   } catch (err) {
-    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to update product`)  
+    req.logger.error(
+      `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to update product`
+    )
   }
 }
 
 //Delete a Product by Id
 export const deleteProduct = async (req, res) => {
   const productToDelete = req.params.pid
-  const product = await productModel.findOne({ _id: req.params.pid})
+  const product = await productModel.findOne({ _id: req.params.pid })
+  const ownerRole = await usersService.getUserByEmail(product.owner)
 
   try {
-    if(req.user.role === 'admin' || product.owner === req.user.email){
-    const result = await productsService.deleteProduct(productToDelete)
-    res.send(result)
-    }
-    else{
-      res.send({message: "Unauthorized to update this product"})
+    if (
+      req.user.role === 'admin' ||
+      (req.user.role === 'premium' && product.owner === req.user.email)
+    ) {
+      if (ownerRole.role === 'premium') {
+        const transport = nodemailer.createTransport({
+          service: 'gmail',
+          port: 587,
+          auth: {
+            user: 'basco79@gmail.com',
+            pass: process.env.gmail,
+          },
+        })
+          const result = transport.sendMail({
+            from: 'Sebastian Basconcelo <basco79@gmail.com>',
+            to: product.owner,
+            subject: 'Product deleted',
+            html: `
+                <div>
+                    <h1>Hi!</h1>
+                <p>Product ${product.title} has been deleted</p>
+                </div>
+            `,
+            attachments: [],
+          })
+      const prodDeleted = await productsService.deleteProduct(productToDelete)
+      return res.send(prodDeleted)
+      }else{
+      const prodDeleted = await productsService.deleteProduct(productToDelete)
+      return res.send(prodDeleted)
+      }
+    } else {
+      res.send({ message: 'Unauthorized to update this product' })
     }
   } catch (err) {
-    req.logger.error(`${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to delete product`)  
+    req.logger.error(
+      `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to delete product`
+    )
   }
 }

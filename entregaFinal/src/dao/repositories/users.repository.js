@@ -11,8 +11,13 @@ export default class UserRepository {
     }
 
     getUserByEmail = (email) => {
-        const user = this.dao.getUserByEmail(email)
+        const user = this.dao.getUserBy({email})
         return user;
+    }
+
+    getUserById = (id) => {
+        const user = this.dao.getUserBy({_id : id})
+        return user
     }
 
     createUser =  (user) => {

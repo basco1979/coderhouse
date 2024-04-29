@@ -9,17 +9,8 @@ export default class Users {
     return users
   }
 
-  getUserByEmail = async (email) => {
-    const user = await userModel.findOne({ email: email })
-    if (!user) {
-      CustomErrors.createError({
-        name: 'user not found',
-        cause: userNotFound(),
-        message: 'Error - user not found',
-        code: ErrorEnum.USER_NOT_FOUND,
-      })
-    }
-    return user
+  getUserBy =  (params) => {
+    return userModel.findOne( params )
   }
 
   saveUser = async (user) => {

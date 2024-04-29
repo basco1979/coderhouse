@@ -136,10 +136,10 @@ export const restorePassword = async (req, res) => {
   }
 }
 
-export const getUserByEmail = async (req, res) => {
-  const { uid } = req.params
+export const getUserById = async (req, res) => {
+  const id = req.params.uid
   try {
-    const user = await usersService.getUserByEmail(uid)
+    const user = await usersService.getUserById(id)
     res.json(user)
   } catch (error) {
     req.logger.error(

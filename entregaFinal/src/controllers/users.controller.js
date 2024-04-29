@@ -25,7 +25,7 @@ export const getUsers= async(req, res) => {
 export const userToPremium = async (req, res) => {
   const { uid } = req.params
   try {
-    const user = await userModel.findOne({ _id: uid })
+    const user = await usersService.getUserById(uid)
     let x = 0
     user.documents.forEach((doc) => {
       if (doc.doctype.includes('profile')) {
@@ -111,3 +111,39 @@ users.forEach((user) => {
   })
   res.send({message})
   }
+
+
+export const deleteUser = async(req, res) => {
+  const id = req.params.uid;
+  const user = await usersService.getUserById(id)
+
+  const transport = nodemailer.createTransport({
+    service: 'gmail',
+    port: 587,
+    auth: {
+      user: 'basco79@gmail.com',
+      pass: process.env.gmail,
+    },
+  })
+  try {
+    const result = transport.sendMail({
+      from: 'Sebastian Basconcelo <basco79@gmail.com>',
+      to: user.email,
+      subject: 'User deleted',
+      html: `
+                <div>
+                    <h1>Hi!</h1>
+                <p>Your user account has been deleted</p>
+                </div>
+            `,
+      attachments: [],
+    })
+    usersService.deleteUser(user._id);
+  res.send({message : 'User deleted. Mail sent' })
+    
+  } catch (error) {
+    console.log(error)
+   message= 'Could not send the email'
+}
+  }
+
