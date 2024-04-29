@@ -1,7 +1,7 @@
 import { productModel } from "../dao/models/product.model.js";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
-import { cartsService } from "../dao/repositories/index.js";
+import { cartsService, usersService } from "../dao/repositories/index.js";
 
 dotenv.config()
 
@@ -105,8 +105,9 @@ export const deleteProductPage = (req, res) => {
 };
 
 
-export const usersPage = (req, res) => {
-  res.render("users");
+export const usersPage = async (req, res) => {
+  const users = await usersService.getUsers()
+  res.render("users", {users});
 };
 
 export const updateUserRolPage = (req, res) => {

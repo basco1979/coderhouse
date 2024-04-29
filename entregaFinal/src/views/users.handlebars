@@ -1,0 +1,21 @@
+<div>
+    <div  style="text-align: center;">
+    <h2>Users list</h2>
+    </div>
+    <table>
+    <tr>
+        <td> Name </td>
+        <td> Email </td>
+        <td> Role </td>
+        <td>Actions</td>
+    </tr>
+    {{#each users}}
+    <tr class="product">
+        <td class="title">{{this.first_name}}  {{this.last_name}}</td>
+        <td>  {{this.email}}   </td>
+        <td>  {{this.role}}   </td>
+        <td> <button><a href="/{{../cartId}}/add/{{this._id}}">Update </a></button> </td>
+    </tr>
+{{/each}}
+</table>
+</div>
