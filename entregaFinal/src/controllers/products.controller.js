@@ -238,6 +238,7 @@ export const deleteProduct = async (req, res) => {
   const ownerRole = await usersService.getUserByEmail(product.owner)
   
     if (req.user.role === 'admin' && ownerRole?.role === 'premium') {
+     try{
       const transport = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
@@ -258,6 +259,7 @@ export const deleteProduct = async (req, res) => {
             `,
         attachments: [],
       })
+     }catch(e){console.log('Error sending email', e)}
       const prodDeleted = await productsService.deleteProduct(productToDelete)
       return res.send(prodDeleted)
     }
