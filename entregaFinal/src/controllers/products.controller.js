@@ -236,45 +236,39 @@ export const deleteProduct = async (req, res) => {
   const productToDelete = req.params.pid
   const product = await productModel.findOne({ _id: req.params.pid })
   const ownerRole = await usersService.getUserByEmail(product.owner)
-
-  try {
-    if (
-      req.user.role === 'admin' ||
-      (req.user.role === 'premium' && product.owner === req.user.email)
-    ) {
-      if (ownerRole.role === 'premium') {
-        const transport = nodemailer.createTransport({
-          service: 'gmail',
-          port: 587,
-          auth: {
-            user: 'basco79@gmail.com',
-            pass: process.env.gmail,
-          },
-        })
-          const result = transport.sendMail({
-            from: 'Sebastian Basconcelo <basco79@gmail.com>',
-            to: product.owner,
-            subject: 'Product deleted',
-            html: `
+  
+    if (req.user.role === 'admin' && ownerRole?.role === 'premium') {
+      const transport = nodemailer.createTransport({
+        service: 'gmail',
+        port: 587,
+        auth: {
+          user: 'basco79@gmail.com',
+          pass: process.env.gmail,
+        },
+      })
+      const result = transport.sendMail({
+        from: 'Sebastian Basconcelo <basco79@gmail.com>',
+        to: product.owner,
+        subject: 'Product deleted',
+        html: `
                 <div>
                     <h1>Hi!</h1>
                 <p>Product ${product.title} has been deleted</p>
                 </div>
             `,
-            attachments: [],
-          })
+        attachments: [],
+      })
       const prodDeleted = await productsService.deleteProduct(productToDelete)
       return res.send(prodDeleted)
-      }else{
+    }
+    if (req.user.role === 'admin' && ownerRole?.role !== 'premium') {
       const prodDeleted = await productsService.deleteProduct(productToDelete)
       return res.send(prodDeleted)
-      }
+    }
+    if (req.user.role === 'premium' && product.owner === req.user.email) {
+      const prodDeleted = await productsService.deleteProduct(productToDelete)
+      return res.send(prodDeleted)
     } else {
       res.send({ message: 'Unauthorized to update this product' })
     }
-  } catch (err) {
-    req.logger.error(
-      `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} - Error to delete product`
-    )
-  }
-}
+ }
