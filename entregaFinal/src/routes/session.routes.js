@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import passport from 'passport'
 import { applyPolicies} from '../middlewares/auth.js'
-import { adminProducts, currentUser, login, register, logout, restorePassword, sendEmail, getUserByEmail } from '../controllers/session.controller.js';
+import { adminProducts, currentUser, login, register, logout, restorePassword, sendEmailToRestorePassword, getUserByEmail } from '../controllers/session.controller.js';
 
 const sessionRouter = Router()
 
@@ -27,7 +27,7 @@ sessionRouter.post('/logout', logout);
 
 sessionRouter.post('/restore-password', restorePassword)
 
-sessionRouter.post('/send-email', sendEmail)
+sessionRouter.post('/send-email', sendEmailToRestorePassword)
 
 sessionRouter.get('/current', applyPolicies(['ADMIN', 'USER', 'PREMIUM']), currentUser)
 

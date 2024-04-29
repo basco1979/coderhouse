@@ -13,8 +13,10 @@ import {
   createProductPage,
   updateProductPage,
   deleteProductPage,
-  sendEmail
-
+  sendEmail,
+  usersPage,
+  updateUserRolPage,
+  deleteUserPage
 } from "../controllers/views.controller.js";
 import { postProductInCart, deleteCart, deleteProductInCart, increaseQuantityProductInCart, decreaseQuantityProductInCart } from "../controllers/carts.controller.js";
 
@@ -56,6 +58,10 @@ viewsRouter.get("/faillogin", getFailLoginPage);
 viewsRouter.get("/create-product", applyPolicies(['ADMIN', 'PREMIUM']), createProductPage);
 viewsRouter.get("/update-product/:pid", applyPolicies(['ADMIN', 'PREMIUM']), updateProductPage);
 viewsRouter.get("/delete-product", applyPolicies(['ADMIN', 'PREMIUM']), deleteProductPage);
+
+viewsRouter.get("/view-users", applyPolicies(['ADMIN']), usersPage);
+viewsRouter.get("/update-role/:pid", applyPolicies(['ADMIN']), updateUserRolPage);
+viewsRouter.get("/delete-user", applyPolicies(['ADMIN']), deleteUserPage)
 
 
 export default viewsRouter;

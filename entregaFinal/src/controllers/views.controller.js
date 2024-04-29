@@ -103,3 +103,16 @@ export const updateProductPage = async (req, res) => {
 export const deleteProductPage = (req, res) => {
   res.render("delete-product");
 };
+
+
+export const usersPage = (req, res) => {
+  res.render("users");
+};
+
+export const updateUserRolPage = (req, res) => {
+  res.render("users-role");
+};
+
+export const deleteUserPage = (req, res) => {
+  res.render("delete-user");
+};

@@ -23,8 +23,8 @@ export const login = async (req, res) => {
     cartId: req.user.cartId,
   }
   const user = await usersService.getUserByEmail(req.user.email)
-  ;(user.last_connection = new Date(Date.now()).toISOString()),
-    await usersService.updateUser(user._id, user)
+  user.last_connection = new Date(Date.now()).toISOString()
+  await usersService.updateUser(user._id, user)
   res.redirect('/')
 }
 
@@ -43,8 +43,8 @@ export const logout = async (req, res) => {
       }
     })
     const user = await usersService.getUserByEmail(req.user.email)
-    ;(user.last_connection = new Date(Date.now()).toISOString()),
-      await usersService.updateUser(user._id, user)
+    user.last_connection = new Date(Date.now()).toISOString()
+    await usersService.updateUser(user._id, user)
     res.send({ redirect: 'http://localhost:8080/login' })
   } catch (error) {
     req.logger.error(
@@ -76,7 +76,7 @@ export const adminProducts = async (req, res) => {
   res.render('admin', products)
 }
 
-export const sendEmail = async (req, res) => {
+export const sendEmailToRestorePassword = async (req, res) => {
   const { email } = req.body
   const transport = nodemailer.createTransport({
     service: 'gmail',

@@ -2,6 +2,8 @@ import { userModel } from '../dao/models/user.model.js'
 import { usersService } from '../dao/repositories/index.js'
 import UserDTO from '../dtos/user.dto.js'
 import moment from 'moment/moment.js'
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
 
 
 export const getUsers= async(req, res) => {
@@ -72,8 +74,40 @@ export const postDocument = async (req, res) => {
 
 export const deleteUsers = async(req, res) => {
   const users = await usersService.getUsers()
+  let message = ""
 users.forEach((user) => {
-  if(user.last_connection <  moment().subtract(15, "days").valueOf()) {
-     console.log("delete", user._id);
-}})
+  if(user.last_connection <  moment().subtract(2, "days").valueOf()) {
+  const transport = nodemailer.createTransport({
+    service: 'gmail',
+    port: 587,
+    auth: {
+      user: 'basco79@gmail.com',
+      pass: process.env.gmail,
+    },
+  })
+  try {
+    const result = transport.sendMail({
+      from: 'Sebastian Basconcelo <basco79@gmail.com>',
+      to: user.email,
+      subject: 'User deleted',
+      html: `
+                <div>
+                    <h1>Hi!</h1>
+                <p>Your user account has been deleted as it has not been connected for more than 2 days</p>
+                </div>
+            `,
+      attachments: [],
+    })
+    usersService.deleteUser(user._id);
+    message =  'Mail sent'
+  } catch (error) {
+    console.log(error)
+   message= 'Could not send the email'
 }
+  }
+  else{
+    message = "No accounts have been deleted"
+  }
+  })
+  res.send({message})
+  }
