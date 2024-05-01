@@ -5,7 +5,8 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import { userModel } from '../dao/models/user.model.js'
 import { cartModel } from '../dao/models/cart.model.js'
 import { createHash, isValidPassword } from '../utils/bcrypt.js'
-import {getVariables} from './config.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const LocalStrategy = local.Strategy
 
@@ -71,9 +72,9 @@ const initializePassport = () => {
     'github',
     new GitHubStrategy(
       {
-        clientID: 'Iv1.ec56f0ccf2b2136a',
-        clientSecret: '3bea9f029c239387a4488c8a50b4e9d6a670e471',
-        callbackURL: 'http://localhost:8080/api/session/githubcallback',
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: '/api/session/githubcallback',
       },
       async (accesToken, refreshToken, profile, done) => {
         try {

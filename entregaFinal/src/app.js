@@ -9,15 +9,15 @@ import mongoose from "mongoose";
 import { messageModel } from "./dao/models/message.model.js";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
-import { getVariables } from './config/config.js';
+//import { getVariables } from './config/config.js';
 import cartsRouter from './routes/carts.router.js';
 import sessionRouter from './routes/session.routes.js';
 import productsRouter from './routes/products.router.js';
 import viewsRouter from './routes/views.router.js';
 import ticketsRouter from './routes/tickets.routes.js';
 import mockingRouter from './routes/mocking.routes.js';
-import { Command } from 'commander'
-import { ErrorHandler } from './middlewares/error.js';
+//import { Command } from 'commander'
+//import { ErrorHandler } from './middlewares/error.js';
 import compression from 'express-compression';
 import { addLogger } from './utils/logger.js';
 import methodOverride from 'method-override'
@@ -25,13 +25,16 @@ import usersRouter from './routes/user.routes.js';
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUiExpress from 'swagger-ui-express'
 import paymentRouter from './routes/payments.routes.js';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
-const program = new Command()
-program.option('--persistence <persistence>')
-const options = program.parse()
-const { mongoUrl, port, secret } = getVariables(options)
+//const program = new Command()
+//program.option('--persistence <persistence>')
+//const options = program.parse()
+//const { mongoUrl, secret } = getVariables(options)
 
+const PORT = process.env.PORT || 8080 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,9 +44,9 @@ app.use(compression({
 }));
 
 app.use(session({
-    secret: secret,
+    secret: process.env.SECRET,
     store: MongoStore.create({
-        mongoUrl: mongoUrl,
+        mongoUrl: process.env.MONGO_URL,
     }),
     resave: true,
     saveUninitialized: true
@@ -107,10 +110,10 @@ app.use('/api/users',  usersRouter)
 app.use('/api/payments', paymentRouter)
 //app.use(ErrorHandler)
 
-mongoose.connect(mongoUrl)
+mongoose.connect(process.env.MONGO_URL)
 
-const httpServer = app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+const httpServer = app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
 
 //WebSockets
