@@ -1,7 +1,7 @@
 import { productModel } from "../dao/models/product.model.js";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
-import { cartsService, usersService } from "../dao/repositories/index.js";
+import { cartsService, ticketsService, usersService } from "../dao/repositories/index.js";
 
 dotenv.config()
 
@@ -63,8 +63,15 @@ export const getCheckoutPage = async(req, res) => {
   const cid = req.params.cid
   const ticket = await cartsService.purchaseCart(cid)
   const cart = await cartsService.getCartById(cid)
-  
+
   res.render('checkout', {ticket, cart})
+}
+
+export const getPaymentPage = async(req, res) => {
+  const tid = req.params.tid
+  const ticket = await ticketsService.getTicketById(tid)
+  const user = req.user
+  res.render('payment', {ticket, user})
 }
 
 export const restorePassword = (req, res) => {
