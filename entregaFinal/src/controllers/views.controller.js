@@ -59,6 +59,14 @@ export const getCartDetailPage = async (req, res) => {
   } else res.status(404).send({ error: "Cart not found" });
 };
 
+export const getCheckoutPage = async(req, res) => {
+  const cid = req.params.cid
+  const ticket = await cartsService.purchaseCart(cid)
+  const cart = await cartsService.getCartById(cid)
+  
+  res.render('checkout', {ticket, cart})
+}
+
 export const restorePassword = (req, res) => {
   let {email, token} = req.query
   try{

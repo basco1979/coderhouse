@@ -16,7 +16,8 @@ import {
   sendEmail,
   usersPage,
   updateUserRolPage,
-  deleteUserPage
+  deleteUserPage,
+  getCheckoutPage
 } from "../controllers/views.controller.js";
 import { postProductInCart, deleteCart, deleteProductInCart, increaseQuantityProductInCart, decreaseQuantityProductInCart } from "../controllers/carts.controller.js";
 
@@ -40,6 +41,10 @@ viewsRouter.get("/:cid/removeQuantity/:pid",  applyPolicies(['USER', 'PREMIUM'])
 viewsRouter.get("/:cid/delete/:pid",  applyPolicies(['USER', 'PREMIUM']), deleteProductInCart);
 
 viewsRouter.get("/cart/:cid", applyPolicies(['USER', 'PREMIUM']), getCartDetailPage);
+
+viewsRouter.get("/cart/:cid/checkout", applyPolicies(['USER', 'PREMIUM']), getCheckoutPage);
+
+
 
 viewsRouter.get(
   "/restore-password",

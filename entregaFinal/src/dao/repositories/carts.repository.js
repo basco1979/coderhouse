@@ -90,25 +90,25 @@ export default class CartRepository {
     const cart = await this.dao.getCartById(id)
     let newCart = []
     let ticket = {}
+    ticket.amount = 0
     for (let i =0; i < cart.products.length; i++) {
       const product = await productModel.findOne({
         _id: cart.products[i].product,
       })
       if (cart.products[i].quantity > product.stock) {
-        newCart = cart.products[i]
+        newCart.push(cart.products[i])
       }
       if (cart.products[i].quantity <= product.stock) {
         product.stock -= cart.products[i].quantity
         await productModel.findOneAndUpdate({ _id: product.id }, product)
         let amount = cart.products[i].quantity * product.price
-        ticket.amount = 0
         ticket.amount += amount
-        ticket.code = uuid()
-        ticket.purchase_datetime = new Date().toISOString()
-        const user = await userModel.findOne({ cartId: id })
-        ticket.purchaser = user.email
       }
     }
+    ticket.code = uuid()
+    ticket.purchase_datetime = new Date().toISOString()
+    const user = await userModel.findOne({ cartId: id })
+    ticket.purchaser = user.email
     const updatedCart = await this.dao.updateCart(id, { products: newCart })
     const ticketGenerated = await ticketModel.create(ticket)
     return ticketGenerated

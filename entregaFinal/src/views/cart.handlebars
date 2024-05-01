@@ -26,9 +26,13 @@
         <h3 style="text-align: center;">Cart Total : $ {{total}}</h3>
     </span>
   </div>
+  <div style="display: flex; justify-content:center">
+    <button><a href="/cart/{{cart.id}}/checkout">
+      Checkout
+    </a></button>
   <form method='POST' action='/api/carts/{{cart._id}}?_method=DELETE'>
     <button>
       Empty Cart
     </button></form>
-</div>
 <button><a href='/products'>Back</a></button>
+</div></div>
